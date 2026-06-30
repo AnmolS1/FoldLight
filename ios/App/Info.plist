@@ -39,16 +39,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<!-- HA is normally reached over HTTPS at homeassistant.internal.ponderance.dev
-	     (Caddy TLS). But if that host's cert/DNS isn't usable on-device, the proven
-	     fallback is the raw Tailscale address over http:// — which ATS would block.
-	     Allow cleartext to Tailscale hosts (ts.net MagicDNS) and, since a CGNAT IP
-	     literal (100.64/10) can't be expressed as a domain exception, permit
-	     arbitrary loads for this personal homelab app. -->
+	<!-- Cleartext HTTP is allowed ONLY to Tailscale MagicDNS hosts (*.ts.net). Such
+	     traffic rides Tailscale's WireGuard tunnel, so the Bearer token is encrypted
+	     on the wire despite being plain http. ATS otherwise stays on (no global
+	     arbitrary-loads). The default base URL is a ts.net host; HTTPS hosts (e.g.
+	     the Caddy hostname) need no exception. A raw Tailscale IP literal would need
+	     its own exception re-added here. -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>ts.net</key>
