@@ -27,7 +27,8 @@ struct EditorView: View {
 
 	private var light: LightState? {
 		if let selectedID, let l = vm.light(withID: selectedID) { return l }
-		return vm.lights.first
+		// Default to the main color-capable light (matches the widget's main light).
+		return vm.lights.first(where: { $0.supportsColor || $0.supportsColorTemp }) ?? vm.lights.first
 	}
 
 	var body: some View {
@@ -164,16 +165,6 @@ struct EditorView: View {
 					.font(Typography.text(14, weight: .semibold))
 					.onChange(of: color) { _, _ in debouncedColorApply(to: light) }
 			}
-
-			Button {
-				Task { await applyEditor(to: light) }
-			} label: {
-				Text("Apply to \(light.name)")
-					.font(Typography.text(15, weight: .semibold))
-					.frame(maxWidth: .infinity, minHeight: 44)
-			}
-			.tint(bp.sax)
-			.buttonStyle(.borderedProminent)
 		}
 		.padding(14)
 		.background(bp.card.opacity(0.6), in: RoundedRectangle(cornerRadius: 12))

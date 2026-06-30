@@ -24,8 +24,10 @@ public final class AppSettings {
 	// this group) share the token.
 	public nonisolated static let keychainGroup = appGroup
 
-	/// The default base URL FoldLight ships with (Caddy HTTPS → HA :8123).
-	public nonisolated static let defaultBaseURL = "https://homeassistant.internal.ponderance.dev"
+	/// The default base URL FoldLight ships with. The raw Tailscale address is used
+	/// (proven reachable) rather than the Caddy HTTPS hostname, whose internal cert
+	/// isn't always trusted on-device. Override in Settings for a different host.
+	public nonisolated static let defaultBaseURL = "http://100.65.218.62:8123"
 
 	public static let shared = AppSettings()
 
