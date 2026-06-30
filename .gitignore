@@ -11,6 +11,9 @@ ios/FoldLight.xcodeproj/
 # macOS
 .DS_Store
 
+# Session tooling / scratch
+.remember/
+
 # Secrets — never commit tokens
 *.env
 .env
