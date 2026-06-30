@@ -1,0 +1,27 @@
+{
+    "entity_id": "light.yetstrhom",
+    "state": "on",
+    "attributes": {
+        "min_color_temp_kelvin": 2202,
+        "max_color_temp_kelvin": 4000,
+        "supported_color_modes": [
+            "color_temp",
+            "xy"
+        ],
+        "color_mode": "xy",
+        "brightness": 191,
+        "color_temp_kelvin": null,
+        "rgb_color": [
+            255,
+            170,
+            90
+        ],
+        "xy_color": [
+            0.5,
+            0.4
+        ],
+        "friendly_name": "Yetstrhöm",
+        "supported_features": 44
+    },
+    "last_changed": "2026-06-30T03:31:25.438138+00:00"
+}
