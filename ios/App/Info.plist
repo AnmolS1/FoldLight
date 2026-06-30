@@ -39,7 +39,26 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<!-- HA is reached over HTTPS at homeassistant.internal.ponderance.dev (Caddy TLS),
-	     so no ATS cleartext exception is needed. A raw-IP http:// fallback would. -->
+	<!-- HA is normally reached over HTTPS at homeassistant.internal.ponderance.dev
+	     (Caddy TLS). But if that host's cert/DNS isn't usable on-device, the proven
+	     fallback is the raw Tailscale address over http:// — which ATS would block.
+	     Allow cleartext to Tailscale hosts (ts.net MagicDNS) and, since a CGNAT IP
+	     literal (100.64/10) can't be expressed as a domain exception, permit
+	     arbitrary loads for this personal homelab app. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>ts.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -19,15 +19,25 @@ public struct SetMainLightOnIntent: SetValueIntent {
 	public func perform() async throws -> some IntentResult {
 		guard let main = LightCache.shared.mainLight() else { return .result() }
 		let provider = StoredConnection.load().makeProvider()
-		if value {
-			try? await provider.turnOn(main.entityID, brightnessPct: nil, rgb: nil, kelvin: nil)
-		} else {
-			try? await provider.turnOff(main.entityID)
+		do {
+			if value {
+				try await provider.turnOn(main.entityID, brightnessPct: nil, rgb: nil, kelvin: nil)
+			} else {
+				try await provider.turnOff(main.entityID)
+			}
+		} catch {
+			// HA unreachable — don't claim the new state.
+			WidgetReload.requestAll()
+			return .result()
 		}
-		var updated = main
-		updated.isOn = value
-		updated.brightnessPct = value ? (main.brightnessPct ?? 100) : nil
-		LightCache.shared.upsert(updated)
+		if let fresh = try? await provider.light(main.entityID) {
+			LightCache.shared.upsert(fresh)
+		} else {
+			var updated = main
+			updated.isOn = value
+			updated.brightnessPct = value ? (main.brightnessPct ?? 100) : nil
+			LightCache.shared.upsert(updated)
+		}
 		WidgetReload.requestAll()
 		return .result()
 	}
@@ -43,13 +53,23 @@ public struct ApplyFavoritePresetIntent: AppIntent {
 	public func perform() async throws -> some IntentResult {
 		guard let main = LightCache.shared.mainLight(),
 		      let preset = PresetStore.shared.favorites().first else { return .result() }
-		try? await StoredConnection.load().makeProvider().apply(preset, to: main.entityID)
-		var updated = main
-		updated.isOn = true
-		updated.brightnessPct = preset.brightnessPct
-		updated.rgb = preset.rgb
-		updated.colorTempKelvin = preset.kelvin
-		LightCache.shared.upsert(updated)
+		let provider = StoredConnection.load().makeProvider()
+		do {
+			try await provider.apply(preset, to: main.entityID)
+		} catch {
+			WidgetReload.requestAll()
+			return .result()
+		}
+		if let fresh = try? await provider.light(main.entityID) {
+			LightCache.shared.upsert(fresh)
+		} else {
+			var updated = main
+			updated.isOn = true
+			updated.brightnessPct = preset.brightnessPct
+			updated.rgb = preset.rgb
+			updated.colorTempKelvin = preset.kelvin
+			LightCache.shared.upsert(updated)
+		}
 		WidgetReload.requestAll()
 		return .result()
 	}

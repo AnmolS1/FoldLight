@@ -42,7 +42,7 @@ public struct LiveLightClient: LightProviding {
 	private func authed(_ url: URL, method: String = "GET", json: [String: Any]? = nil) throws -> URLRequest {
 		var req = URLRequest(url: url)
 		req.httpMethod = method
-		req.timeoutInterval = 8
+		req.timeoutInterval = 5
 		if !token.isEmpty { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
 		if let json {
 			req.setValue("application/json", forHTTPHeaderField: "Content-Type")
