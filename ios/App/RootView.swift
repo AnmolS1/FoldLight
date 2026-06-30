@@ -17,7 +17,7 @@ struct RootView: View {
 
 	var body: some View {
 		TabView {
-			tab(EditorView(vm: vm), "Light", "lightbulb")
+			tab(EditorView(vm: vm, settings: settings), "Light", "lightbulb")
 			tab(PanelView(), "Panel", "square.grid.2x2")
 			tab(SettingsView(settings: settings), "Settings", "gearshape")
 		}

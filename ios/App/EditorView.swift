@@ -12,6 +12,7 @@ import AppKit
 struct EditorView: View {
 	@Environment(\.blueprint) private var bp
 	@Bindable var vm: LightsViewModel
+	@Bindable var settings: AppSettings
 
 	@State private var selectedID: String?
 	@State private var brightness: Double = 100
@@ -20,6 +21,7 @@ struct EditorView: View {
 	@State private var mode: ColorMode = .white
 	@State private var presetName = ""
 	@State private var presets: [LightPreset] = []
+	@State private var colorDebounce: Task<Void, Never>?
 
 	enum ColorMode: String, CaseIterable { case white = "White", color = "Color" }
 
@@ -31,6 +33,7 @@ struct EditorView: View {
 	var body: some View {
 		ScrollView {
 			VStack(spacing: 16) {
+				statusBanner
 				if vm.lights.isEmpty {
 					emptyState
 				} else {
@@ -50,6 +53,28 @@ struct EditorView: View {
 		}
 		.task(id: light?.entityID) { syncFromLight() }
 		.onAppear { presets = PresetStore.shared.load() }
+	}
+
+	// MARK: Status banner
+
+	@ViewBuilder private var statusBanner: some View {
+		if settings.useMockData {
+			banner("Mock data — real lights aren't being controlled. Turn off \u{201C}Use mock data\u{201D} in Settings.", color: bp.sax)
+		} else if let err = vm.lastError {
+			banner("Can't reach Home Assistant: \(err)", color: bp.crane)
+		}
+	}
+
+	private func banner(_ text: String, color: Color) -> some View {
+		HStack(spacing: 8) {
+			Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(color)
+			Text(text).font(Typography.text(12)).foregroundStyle(bp.ink)
+			Spacer(minLength: 0)
+		}
+		.padding(10)
+		.frame(maxWidth: .infinity, alignment: .leading)
+		.background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
+		.overlay(RoundedRectangle(cornerRadius: 8).stroke(color.opacity(0.5), lineWidth: 0.5))
 	}
 
 	// MARK: Light picker
@@ -114,7 +139,10 @@ struct EditorView: View {
 			}
 
 			if light.supportsBrightness {
-				labeledSlider("Brightness", value: $brightness, range: 0...100, unit: "%")
+				// Applies on release (a natural debounce — one HA call per drag).
+				labeledSlider("Brightness", value: $brightness, range: 0...100, unit: "%") {
+					Task { await applyEditor(to: light) }
+				}
 			}
 
 			if light.supportsColor && light.supportsColorTemp {
@@ -126,12 +154,15 @@ struct EditorView: View {
 
 			if light.supportsColorTemp && (mode == .white || !light.supportsColor) {
 				labeledSlider("Temperature", value: $kelvin,
-				              range: Double(light.minKelvin ?? 2000)...Double(light.maxKelvin ?? 6500), unit: "K")
+				              range: Double(light.minKelvin ?? 2000)...Double(light.maxKelvin ?? 6500), unit: "K") {
+					Task { await applyEditor(to: light) }
+				}
 			}
 
 			if light.supportsColor && (mode == .color || !light.supportsColorTemp) {
 				ColorPicker("Color", selection: $color, supportsOpacity: false)
 					.font(Typography.text(14, weight: .semibold))
+					.onChange(of: color) { _, _ in debouncedColorApply(to: light) }
 			}
 
 			Button {
@@ -148,14 +179,17 @@ struct EditorView: View {
 		.background(bp.card.opacity(0.6), in: RoundedRectangle(cornerRadius: 12))
 	}
 
-	private func labeledSlider(_ title: String, value: Binding<Double>, range: ClosedRange<Double>, unit: String) -> some View {
+	private func labeledSlider(_ title: String, value: Binding<Double>, range: ClosedRange<Double>, unit: String,
+	                           onCommit: @escaping () -> Void) -> some View {
 		VStack(alignment: .leading, spacing: 4) {
 			HStack {
 				Text(title).font(Typography.text(14, weight: .semibold)).foregroundStyle(bp.ink)
 				Spacer()
 				Text("\(Int(value.wrappedValue))\(unit)").font(Typography.mono(12)).foregroundStyle(bp.ink60)
 			}
-			Slider(value: value, in: range).tint(bp.crease)
+			Slider(value: value, in: range, onEditingChanged: { editing in
+				if !editing { onCommit() }   // fire once, on release
+			}).tint(bp.crease)
 		}
 	}
 
@@ -216,6 +250,17 @@ struct EditorView: View {
 		if let rgb = light.rgb { color = rgb.color; mode = .color }
 		else if light.supportsColorTemp { mode = .white }
 		else if light.supportsColor { mode = .color }
+	}
+
+	/// Debounce rapid ColorPicker changes into one HA call (~350ms after the last).
+	private func debouncedColorApply(to light: LightState) {
+		colorDebounce?.cancel()
+		colorDebounce = Task {
+			try? await Task.sleep(for: .milliseconds(350))
+			if Task.isCancelled { return }
+			if mode != .color { mode = .color }
+			await applyEditor(to: light)
+		}
 	}
 
 	private func applyEditor(to light: LightState) async {
