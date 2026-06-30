@@ -33,5 +33,6 @@ Requires [XcodeGen](https://github.com/yonsky/XcodeGen) (`brew install xcodegen`
 ## Connect to Home Assistant
 Create a long-lived access token in HA (profile → Security → Long-Lived Access
 Tokens), then in the app: Settings → turn off "Use mock data" → set the base URL
-(default `https://homeassistant.internal.ponderance.dev`) → paste the token → Test
-connection. Reach HA over Tailscale or a Cloudflare Tunnel.
+→ paste the token → Test connection. The base URL accepts either an HTTPS hostname
+or a raw `http://host:8123` (e.g. over Tailscale). Reach HA over Tailscale or a
+Cloudflare Tunnel.

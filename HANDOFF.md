@@ -45,8 +45,9 @@ Apply to HA; save/delete presets), `PanelView` (launcher tiles), `SettingsView`
 (URL + token + Test connection; mock toggle).
 
 ## Live HA facts (verified this session)
-- App base URL (ships as default): `https://homeassistant.internal.ponderance.dev`
-  (Caddy HTTPS → :8123). Raw fallback `http://100.65.218.62:8123` (Tailscale).
+- App base URL (ships as default): `http://100.65.218.62:8123` (Tailscale — proven
+  reachable). Alt: Caddy HTTPS `https://homeassistant.internal.ponderance.dev` (its
+  internal cert isn't always trusted on-device). ATS allows the cleartext Tailscale path.
 - Token: `/Volumes/docker/.env` → `HA_TOKEN` (valid). **Not** baked into source —
   paste it into Settings on device.
 - Entities (real `/api/states` captured as test fixtures in `FoldKitTests/Fixtures/`):
