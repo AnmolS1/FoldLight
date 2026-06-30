@@ -24,10 +24,13 @@ public final class AppSettings {
 	// this group) share the token.
 	public nonisolated static let keychainGroup = appGroup
 
-	/// The default base URL FoldLight ships with. The raw Tailscale address is used
-	/// (proven reachable) rather than the Caddy HTTPS hostname, whose internal cert
-	/// isn't always trusted on-device. Override in Settings for a different host.
-	public nonisolated static let defaultBaseURL = "http://100.65.218.62:8123"
+	/// The default base URL FoldLight ships with: the Tailscale MagicDNS host. Plain
+	/// http is fine here because the connection rides Tailscale's WireGuard tunnel
+	/// (encrypted end-to-end), and ATS only permits cleartext to `ts.net` hosts — not
+	/// globally. If MagicDNS is off, paste the raw Tailscale IP in Settings instead.
+	/// The Caddy HTTPS host (homeassistant.internal.ponderance.dev) also works if its
+	/// internal cert is trusted on-device.
+	public nonisolated static let defaultBaseURL = "http://discofin-server.tail40f2e5.ts.net:8123"
 
 	public static let shared = AppSettings()
 
