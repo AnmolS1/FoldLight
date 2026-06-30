@@ -1,0 +1,16 @@
+# Xcode / build
+ios/build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+
+# XcodeGen output (regenerate with `xcodegen generate`)
+ios/FoldLight.xcodeproj/
+
+# macOS
+.DS_Store
+
+# Secrets — never commit tokens
+*.env
+.env

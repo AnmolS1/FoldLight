@@ -1,0 +1,40 @@
+{
+    "entity_id": "light.yetstrhom",
+    "state": "off",
+    "attributes": {
+        "min_color_temp_kelvin": 2202,
+        "max_color_temp_kelvin": 4000,
+        "effect_list": [
+            "blink",
+            "breathe",
+            "okay",
+            "channel_change",
+            "finish_effect",
+            "stop_effect",
+            "colorloop",
+            "stop_colorloop"
+        ],
+        "supported_color_modes": [
+            "color_temp",
+            "xy"
+        ],
+        "effect": null,
+        "color_mode": null,
+        "brightness": null,
+        "color_temp_kelvin": null,
+        "hs_color": null,
+        "rgb_color": null,
+        "xy_color": null,
+        "icon": "mdi:lightbulb-cfl",
+        "friendly_name": "Yetstrh\u00f6m",
+        "supported_features": 44
+    },
+    "last_changed": "2026-06-30T03:31:25.438138+00:00",
+    "last_reported": "2026-06-30T03:31:25.438138+00:00",
+    "last_updated": "2026-06-30T03:31:25.438138+00:00",
+    "context": {
+        "id": "01KWB99T3YNKW8NG72FY2C8YY7",
+        "parent_id": null,
+        "user_id": null
+    }
+}

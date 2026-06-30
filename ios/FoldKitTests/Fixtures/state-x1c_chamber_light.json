@@ -1,0 +1,21 @@
+{
+    "entity_id": "light.x1c_chamber_light",
+    "state": "off",
+    "attributes": {
+        "supported_color_modes": [
+            "onoff"
+        ],
+        "color_mode": null,
+        "icon": "mdi:printer-3d",
+        "friendly_name": "X1C Chamber Light",
+        "supported_features": 0
+    },
+    "last_changed": "2026-06-30T03:30:50.368036+00:00",
+    "last_reported": "2026-06-30T03:51:15.137794+00:00",
+    "last_updated": "2026-06-30T03:30:50.368036+00:00",
+    "context": {
+        "id": "01KWB98QW0CRD8TBK479RP0CSM",
+        "parent_id": null,
+        "user_id": null
+    }
+}
