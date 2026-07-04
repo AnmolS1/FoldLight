@@ -19,6 +19,10 @@ public struct KeychainStore: Sendable {
 			kSecClass as String: kSecClassGenericPassword,
 			kSecAttrService as String: service,
 			kSecAttrAccount as String: key,
+			// Use the data-protection keychain (not the macOS file/login keychain).
+			// This is what actually lets the app and the widget extension share an
+			// item by access group on macOS; on iOS it's the default and a no-op.
+			kSecUseDataProtectionKeychain as String: true,
 		]
 		if includeGroup, let accessGroup { q[kSecAttrAccessGroup as String] = accessGroup }
 		return q

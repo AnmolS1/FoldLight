@@ -27,9 +27,11 @@ public struct SetMainLightOnIntent: SetValueIntent {
 			}
 		} catch {
 			// HA unreachable — don't claim the new state.
+			IntentDiagnostics.record("control-toggle", error)
 			WidgetReload.requestAll()
 			return .result()
 		}
+		IntentDiagnostics.clear()
 		if let fresh = try? await provider.light(main.entityID) {
 			LightCache.shared.upsert(fresh)
 		} else {
@@ -57,9 +59,11 @@ public struct ApplyFavoritePresetIntent: AppIntent {
 		do {
 			try await provider.apply(preset, to: main.entityID)
 		} catch {
+			IntentDiagnostics.record("control-preset", error)
 			WidgetReload.requestAll()
 			return .result()
 		}
+		IntentDiagnostics.clear()
 		if let fresh = try? await provider.light(main.entityID) {
 			LightCache.shared.upsert(fresh)
 		} else {

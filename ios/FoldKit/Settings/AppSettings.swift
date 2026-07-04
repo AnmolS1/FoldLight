@@ -19,10 +19,15 @@ public enum SettingsKeys {
 @Observable
 public final class AppSettings {
 	public nonisolated static let appGroup = "group.dev.ponderance.foldlight"
-	// Use the App Group as the Keychain access group: app-group identifiers work
-	// as keychain groups WITHOUT the team prefix, so the app and widget (both in
-	// this group) share the token.
-	public nonisolated static let keychainGroup = appGroup
+	// Keychain sharing between the app and the widget extension: we pass NO explicit
+	// access group (nil). Both targets declare the same team-prefixed
+	// `keychain-access-groups` entitlement ($(AppIdentifierPrefix)dev.ponderance.foldlight),
+	// so with no group specified the item lands in that shared default group — the
+	// app writes the HA token, the widget reads it. (App Group identifiers are NOT
+	// accepted in `keychain-access-groups` by provisioning, so we must not pass the
+	// app group here.) On macOS this sharing additionally requires the
+	// data-protection keychain, which `KeychainStore` sets via kSecUseDataProtectionKeychain.
+	public nonisolated static let keychainGroup: String? = nil
 
 	/// The default base URL FoldLight ships with: the Tailscale MagicDNS host. Plain
 	/// http is fine here because the connection rides Tailscale's WireGuard tunnel

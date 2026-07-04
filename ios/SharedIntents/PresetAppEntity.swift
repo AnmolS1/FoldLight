@@ -1,4 +1,5 @@
 import AppIntents
+import FoldKit
 
 /// A saved preset, pickable in widgets/Shortcuts/controls. Backed by `PresetStore`
 /// (App Group), so the swatches the user saved in the app become applyable here.
