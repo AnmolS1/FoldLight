@@ -2,54 +2,55 @@ import SwiftUI
 import FoldKit
 
 /// Connection settings: mock toggle, HA base URL + long-lived token (Keychain),
-/// and a "Test connection" button that hits `GET /api/`.
+/// and a "Test connection" button that hits `GET /api/`. Blueprint-styled —
+/// labels above full-width fields on graph paper, never a stock `Form`.
 struct SettingsView: View {
 	@Environment(\.blueprint) private var bp
 	@Bindable var settings: AppSettings
 
 	@State private var testing = false
 	@State private var testResult: String?
+	@State private var testFailed = false
 
 	var body: some View {
-		Form {
-			Section {
-				Toggle("Use mock data", isOn: $settings.useMockData)
-			} footer: {
-				Text("Render bundled sample lights with no server. Turn off to connect to Home Assistant.")
-			}
+		ScrollView {
+			VStack(alignment: .leading, spacing: 20) {
+				BlueprintFormSection(
+					footer: "Render bundled sample lights with no server. Turn off to connect to Home Assistant."
+				) {
+					BlueprintToggleRow("Use mock data", isOn: $settings.useMockData)
+				}
 
-			Section("Home Assistant") {
-				TextField("Base URL", text: $settings.baseURLString)
-					.textContentType(.URL)
-					.disableAutocorrection(true)
-					#if os(iOS)
-					.textInputAutocapitalization(.never)
-					.keyboardType(.URL)
-					#endif
-				SecureField("Long-lived access token", text: $settings.token)
-
-				Button {
-					runTest()
-				} label: {
-					HStack {
-						Text("Test connection")
-						if testing { Spacer(); ProgressView() }
+				BlueprintFormSection(
+					"Home Assistant",
+					footer: "Create a long-lived access token in Home Assistant under your profile → Security."
+				) {
+					BlueprintField("Base URL", text: $settings.baseURLString, kind: .mono,
+					               prompt: "https://homeassistant.local:8123", isURL: true)
+					BlueprintField("Long-lived access token", text: $settings.token, kind: .monoSecure)
+					BlueprintActionRow(
+						title: "Test connection",
+						busy: testing,
+						result: testResult,
+						isError: testFailed,
+						disabled: settings.baseURLString.isEmpty
+					) {
+						runTest()
 					}
 				}
-				.disabled(testing || settings.baseURLString.isEmpty)
-
-				if let testResult {
-					Text(testResult).foregroundStyle(bp.ink60)
-				}
+				.disabled(settings.useMockData)
+				.opacity(settings.useMockData ? 0.5 : 1)
 			}
-			.disabled(settings.useMockData)
+			.padding(16)
+			.frame(maxWidth: 520)
+			.frame(maxWidth: .infinity)
 		}
-		.scrollContentBackground(.hidden)
 	}
 
 	private func runTest() {
 		testing = true
 		testResult = nil
+		testFailed = false
 		let urlString = settings.baseURLString
 		let token = settings.token
 		Task {
@@ -60,6 +61,7 @@ struct SettingsView: View {
 				ok = false
 			}
 			testResult = ok ? "Reachable ✓" : "Not reachable — check URL and token."
+			testFailed = !ok
 			testing = false
 		}
 	}
