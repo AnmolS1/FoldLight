@@ -106,22 +106,28 @@ struct OnboardingView: View {
 		let urlString = settings.baseURLString
 		let token = settings.token
 		Task {
-			let ok: Bool
+			let status: Int?
 			if let client = LiveLightClient(baseURLString: urlString, token: token) {
-				ok = await client.testConnection()
+				status = await client.testConnectionStatus()
 			} else {
-				ok = false
+				status = nil
 			}
-			if ok {
+			switch status {
+			case 200:
 				settings.useMockData = false
 				settings.hasCompletedOnboarding = true
 				testing = false
 				dismiss()
-			} else {
-				testResult = "Not reachable — check URL and token. You can also explore with sample data below."
-				testFailed = true
-				testing = false
+				return
+			case 401, 403:
+				testResult = "Server reachable, but the token was rejected — paste a long-lived access token from your Home Assistant profile (Security tab)."
+			case .some(let code):
+				testResult = "Server responded HTTP \(code) — is this the Home Assistant URL?"
+			case nil:
+				testResult = "Not reachable — check the URL and your network. You can also explore with sample data below."
 			}
+			testFailed = true
+			testing = false
 		}
 	}
 }
