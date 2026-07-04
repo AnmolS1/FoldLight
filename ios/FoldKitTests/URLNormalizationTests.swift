@@ -1,6 +1,16 @@
 import XCTest
 @testable import FoldKit
 
+final class TokenHandlingTests: XCTestCase {
+	func testClientTrimsPastedTokenWhitespace() {
+		// Tokens pasted from a .env/terminal often carry a trailing newline,
+		// which would corrupt the Authorization header.
+		let client = LiveLightClient(baseURLString: "https://ha.example.com:8123",
+		                             token: "  eyJhbGciOi.example.token\n")
+		XCTAssertEqual(client?.token, "eyJhbGciOi.example.token")
+	}
+}
+
 /// `LiveLightClient.normalizedBase` reduces pasted user input to the HA root.
 final class URLNormalizationTests: XCTestCase {
 	func testRootUnchanged() {

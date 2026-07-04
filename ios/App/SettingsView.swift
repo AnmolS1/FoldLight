@@ -77,14 +77,26 @@ struct SettingsView: View {
 		let urlString = settings.baseURLString
 		let token = settings.token
 		Task {
-			let ok: Bool
+			let status: Int?
 			if let client = LiveLightClient(baseURLString: urlString, token: token) {
-				ok = await client.testConnection()
+				status = await client.testConnectionStatus()
 			} else {
-				ok = false
+				status = nil
 			}
-			testResult = ok ? "Reachable ✓" : "Not reachable — check URL and token."
-			testFailed = !ok
+			switch status {
+			case 200:
+				testResult = "Reachable ✓"
+				testFailed = false
+			case 401, 403:
+				testResult = "Server reachable, but the token was rejected — paste a long-lived access token from your Home Assistant profile (Security tab)."
+				testFailed = true
+			case .some(let code):
+				testResult = "Server responded HTTP \(code) — is this the Home Assistant URL?"
+				testFailed = true
+			case nil:
+				testResult = "Not reachable — check the URL and your network."
+				testFailed = true
+			}
 			testing = false
 		}
 	}

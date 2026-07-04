@@ -16,7 +16,10 @@ public struct LiveLightClient: LightProviding {
 	public init?(baseURLString: String, token: String, session: URLSession = .shared) {
 		guard let url = URL(string: Self.normalizedBase(baseURLString)) else { return nil }
 		self.baseURL = url
-		self.token = token
+		// Tokens pasted from a .env or terminal often carry stray whitespace or
+		// a trailing newline — HA tokens never legitimately contain either, and
+		// a newline in the Authorization header breaks the request outright.
+		self.token = token.trimmingCharacters(in: .whitespacesAndNewlines)
 		self.session = session
 	}
 
@@ -113,10 +116,18 @@ public struct LiveLightClient: LightProviding {
 	}
 
 	public func testConnection() async -> Bool {
-		guard let req = try? authed(endpoint("api/")) else { return false }
+		await testConnectionStatus() == 200
+	}
+
+	/// Like `testConnection()`, but preserves the HTTP status so callers can
+	/// distinguish "server unreachable" (nil) from "server reachable but the
+	/// token was rejected" (401/403) — conflating the two sends users hunting
+	/// the URL when the problem is the token.
+	public func testConnectionStatus() async -> Int? {
+		guard let req = try? authed(endpoint("api/")) else { return nil }
 		guard let (_, response) = try? await session.data(for: req),
-		      let http = response as? HTTPURLResponse else { return false }
-		return http.statusCode == 200
+		      let http = response as? HTTPURLResponse else { return nil }
+		return http.statusCode
 	}
 }
 
