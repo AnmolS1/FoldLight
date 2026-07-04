@@ -12,7 +12,6 @@ struct FoldLightApp: App {
 	var body: some Scene {
 		WindowGroup {
 			RootView(settings: settings)
-				.preferredColorScheme(.dark)
 		}
 		#if os(macOS)
 		.defaultSize(width: 460, height: 720)
