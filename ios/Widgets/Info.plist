@@ -18,6 +18,25 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<!-- The widget process makes its OWN network calls to Home Assistant from the
+	     App Intents (toggle/brightness/preset). It therefore needs the same ATS
+	     exception the app has: cleartext HTTP is allowed ONLY to Tailscale MagicDNS
+	     hosts (*.ts.net), which ride the encrypted WireGuard tunnel. Without this,
+	     the default http://…ts.net HA request is blocked and the button silently
+	     no-ops. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>ts.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

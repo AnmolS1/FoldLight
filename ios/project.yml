@@ -37,6 +37,11 @@ targets:
     supportedDestinations: [iOS, macOS]
     sources:
       - path: App
+      # The widget AppIntents are compiled into the app too so the app bundle's
+      # AppIntents metadata contains them. macOS resolves an interactive widget
+      # intent against the APP bundle (chronod: "no metadata for ToggleLightIntent
+      # in dev.ponderance.foldlight"), unlike iOS which resolves it in the extension.
+      - path: SharedIntents
     dependencies:
       - target: FoldKit
       - target: FoldLightWidgets
@@ -65,6 +70,9 @@ targets:
     supportedDestinations: [iOS, macOS]
     sources:
       - path: Widgets
+      # Same intent sources as the app; the widget's Button(intent:) uses this copy
+      # and its metadata is extracted into the appex (needed on iOS).
+      - path: SharedIntents
     dependencies:
       - target: FoldKit
     settings:
@@ -73,6 +81,21 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: Widgets/Info.plist
         CODE_SIGN_ENTITLEMENTS: Widgets/FoldLightWidgets.entitlements
+        # The widget extension links FoldKit but the framework is embedded in the
+        # PARENT app bundle, not the appex. It must find it via rpath or it crashes
+        # at launch (dyld "Library not loaded: @rpath/FoldKit.framework") and the
+        # widget renders blank — which is exactly why the buttons did nothing. The
+        # appex nests deeper than the app, so the search paths differ per platform:
+        #   iOS:   App.app/PlugIns/W.appex/W          → ../../Frameworks
+        #   macOS: App.app/Contents/PlugIns/W.appex/Contents/MacOS/W → ../../../../Frameworks
+        LD_RUNPATH_SEARCH_PATHS:
+          - "$(inherited)"
+          - "@executable_path/Frameworks"
+          - "@executable_path/../../Frameworks"
+          - "@executable_path/../../../../Frameworks"
+          - "@loader_path/Frameworks"
+          - "@loader_path/../../Frameworks"
+          - "@loader_path/../../../../Frameworks"
 
   # ── Unit tests for FoldKit (HA decode, brightness, URL norm, presets) ──
   FoldKitTests:

@@ -1,4 +1,5 @@
 import AppIntents
+import FoldKit
 
 /// After a control action, reflect the **real** HA state in the App-Group cache
 /// (so widgets tell the truth, never an optimistic guess). Re-reads the one light;
@@ -31,10 +32,13 @@ public struct ToggleLightIntent: AppIntent {
 			try await provider.toggle(light.id)
 		} catch {
 			// HA unreachable — do NOT flip the cached state (that caused the
-			// "widget says on but bulb is off" inversion).
+			// "widget says on but bulb is off" inversion). Record why so the failure
+			// isn't invisible (ATS block, 401/missing token, offline).
+			IntentDiagnostics.record("toggle", error)
 			WidgetReload.requestAll()
 			return .result()
 		}
+		IntentDiagnostics.clear()
 		await reconcile(light.id, provider: provider) { $0.isOn.toggle() }
 		return .result()
 	}
@@ -60,9 +64,11 @@ public struct SetBrightnessIntent: AppIntent {
 		do {
 			try await provider.turnOn(light.id, brightnessPct: pct, rgb: nil, kelvin: nil)
 		} catch {
+			IntentDiagnostics.record("brightness", error)
 			WidgetReload.requestAll()
 			return .result()
 		}
+		IntentDiagnostics.clear()
 		await reconcile(light.id, provider: provider) { l in
 			l.isOn = pct > 0
 			l.brightnessPct = pct > 0 ? pct : nil
@@ -94,9 +100,11 @@ public struct ApplyPresetIntent: AppIntent {
 		do {
 			try await provider.apply(stored, to: light.id)
 		} catch {
+			IntentDiagnostics.record("preset", error)
 			WidgetReload.requestAll()
 			return .result()
 		}
+		IntentDiagnostics.clear()
 		await reconcile(light.id, provider: provider) { l in
 			l.isOn = true
 			l.brightnessPct = stored.brightnessPct

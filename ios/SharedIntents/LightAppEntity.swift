@@ -1,4 +1,5 @@
 import AppIntents
+import FoldKit
 
 /// A Home Assistant light, pickable in widget configuration, Shortcuts, and
 /// Control Center controls. Backed by the App-Group light cache (with a best-effort
