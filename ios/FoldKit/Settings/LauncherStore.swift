@@ -60,9 +60,13 @@ public struct LauncherStore: Sendable {
 	}
 
 	/// A "Home Assistant" tile derived from the configured base URL — used as a
-	/// fallback when the store is empty and as the Settings quick-add.
+	/// fallback when the store is empty and as the Settings quick-add. Requires
+	/// a real scheme + host (the modern Foundation URL parser is lenient enough
+	/// to accept almost any string, so `URL(string:) != nil` proves nothing).
 	public static func homeAssistantTarget(baseURLString: String) -> LauncherTarget? {
-		guard !baseURLString.isEmpty, URL(string: baseURLString) != nil else { return nil }
+		guard !baseURLString.isEmpty,
+		      let url = URL(string: baseURLString),
+		      url.scheme != nil, url.host != nil else { return nil }
 		return LauncherTarget(
 			id: "ha",
 			name: "Home Assistant",

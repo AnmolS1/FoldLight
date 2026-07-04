@@ -36,17 +36,27 @@ public struct LightEntityQuery: EntityQuery {
 		return (try? await StoredConnection.load().makeProvider().lights()) ?? LightState.samples
 	}
 
+	/// Detected lights with the user's favorites ordering + renames applied.
+	private func arrangedLights() async -> [LightState] {
+		LightPrefsStore.shared.load().arrange(await allLights())
+	}
+
 	public func entities(for identifiers: [String]) async throws -> [LightAppEntity] {
-		let all = await allLights()
+		let all = await arrangedLights()
 		return all.filter { identifiers.contains($0.entityID) }.map(LightAppEntity.init)
 	}
 
 	public func suggestedEntities() async throws -> [LightAppEntity] {
-		await allLights().map(LightAppEntity.init)
+		await arrangedLights().map(LightAppEntity.init)
 	}
 
+	/// The configured main light (Settings → Lights), else the old heuristic.
 	public func defaultResult() async -> LightAppEntity? {
-		let all = await allLights()
+		let all = await arrangedLights()
+		if let chosen = LightPrefsStore.shared.load().mainLightID,
+		   let main = all.first(where: { $0.entityID == chosen }) {
+			return LightAppEntity(main)
+		}
 		let main = all.first(where: { $0.supportsColor || $0.supportsColorTemp }) ?? all.first
 		return main.map(LightAppEntity.init)
 	}

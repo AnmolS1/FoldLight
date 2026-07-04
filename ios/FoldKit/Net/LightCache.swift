@@ -30,11 +30,22 @@ public struct LightCache: Sendable {
 		return lights
 	}
 
-	/// The "main" light to dedicate the small widget / controls to: the first
-	/// color-capable light, else the first light, else nil.
+	/// The "main" light to dedicate the small widget / controls to: the user's
+	/// configured choice (Settings → Lights) when it's still present, else the
+	/// old heuristic — first color/temp-capable light, else the first.
 	public func mainLight() -> LightState? {
 		let lights = read()
+		if let chosen = LightPrefsStore.shared.load().mainLightID,
+		   let light = lights.first(where: { $0.entityID == chosen }) {
+			return light
+		}
 		return lights.first(where: { $0.supportsColor || $0.supportsColorTemp }) ?? lights.first
+	}
+
+	/// The cached lights with the user's favorites ordering + renames applied —
+	/// what pickers and the entity query should show.
+	public func displayLights() -> [LightState] {
+		LightPrefsStore.shared.load().arrange(read())
 	}
 
 	/// Optimistically replace one light's cached state (used by intents before the
