@@ -26,6 +26,10 @@
 	     no-ops. -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<!-- Same posture as the app: HTTPS by default, cleartext permitted only
+		     to local-network hosts and *.ts.net. -->
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>ts.net</key>

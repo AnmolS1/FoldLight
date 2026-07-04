@@ -7,6 +7,7 @@ public enum SettingsKeys {
 	public static let baseURL = "baseURLString"
 	public static let useMock = "useMockData"
 	public static let token = "haToken"
+	public static let onboarded = "hasCompletedOnboarding"
 }
 
 /// Observable app configuration, shared between the app and the widgets.
@@ -29,13 +30,11 @@ public final class AppSettings {
 	// data-protection keychain, which `KeychainStore` sets via kSecUseDataProtectionKeychain.
 	public nonisolated static let keychainGroup: String? = nil
 
-	/// The default base URL FoldLight ships with: the Tailscale MagicDNS host. Plain
-	/// http is fine here because the connection rides Tailscale's WireGuard tunnel
-	/// (encrypted end-to-end), and ATS only permits cleartext to `ts.net` hosts — not
-	/// globally. If MagicDNS is off, paste the raw Tailscale IP in Settings instead.
-	/// The Caddy HTTPS host (homeassistant.internal.ponderance.dev) also works if its
-	/// internal cert is trusted on-device.
-	public nonisolated static let defaultBaseURL = "http://discofin-server.tail40f2e5.ts.net:8123"
+	/// FoldLight ships with no server configured: first run stays in mock mode and
+	/// onboarding collects the user's own Home Assistant URL + token. (Note on ATS:
+	/// cleartext HTTP is permitted only to `*.ts.net` hosts, which ride Tailscale's
+	/// encrypted WireGuard tunnel — everything else needs HTTPS.)
+	public nonisolated static let defaultBaseURL = ""
 
 	public static let shared = AppSettings()
 
@@ -58,6 +57,11 @@ public final class AppSettings {
 		didSet { keychain.set(token, for: Keys.token) }
 	}
 
+	/// First-run onboarding has been shown (connected or "explore with sample data").
+	public var hasCompletedOnboarding: Bool {
+		didSet { defaults.set(hasCompletedOnboarding, forKey: Keys.onboarded) }
+	}
+
 	public init(
 		defaults: UserDefaults = AppSettings.defaultStore(),
 		keychain: KeychainStore = KeychainStore(accessGroup: AppSettings.keychainGroup)
@@ -68,6 +72,7 @@ public final class AppSettings {
 		self.useMockData = (defaults.object(forKey: Keys.useMock) as? Bool) ?? true
 		self.baseURLString = defaults.string(forKey: Keys.baseURL) ?? AppSettings.defaultBaseURL
 		self.token = keychain.string(for: Keys.token) ?? ""
+		self.hasCompletedOnboarding = defaults.bool(forKey: Keys.onboarded)
 	}
 
 	/// App Group store when available, else the standard store (unsigned builds).

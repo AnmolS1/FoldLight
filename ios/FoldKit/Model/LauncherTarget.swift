@@ -18,23 +18,3 @@ public struct LauncherTarget: Identifiable, Sendable, Hashable, Codable {
 	public var url: URL? { URL(string: urlString) }
 }
 
-public extension LauncherTarget {
-	static let homeAssistant = LauncherTarget(
-		id: "ha",
-		name: "Home Assistant",
-		urlString: "https://homeassistant.internal.ponderance.dev/",
-		symbol: "house.fill"
-	)
-
-	static let printer = LauncherTarget(
-		id: "printer",
-		name: "Printer · Bambuddy",
-		urlString: "https://bambuddy.internal.ponderance.dev/",
-		symbol: "printer.fill"
-	)
-
-	/// Seed launchers shown this pass.
-	static let all: [LauncherTarget] = [.homeAssistant, .printer]
-
-	static func with(id: String) -> LauncherTarget? { all.first { $0.id == id } }
-}

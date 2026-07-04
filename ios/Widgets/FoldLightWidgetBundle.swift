@@ -12,8 +12,7 @@ struct FoldLightWidgetBundle: WidgetBundle {
 		if #available(iOS 18.0, *) {
 			MainLightToggleControl()
 			ApplyPresetControl()
-			OpenHomeAssistantControl()
-			OpenPrinterControl()
+			OpenLauncherControl()
 		}
 		#endif
 	}
