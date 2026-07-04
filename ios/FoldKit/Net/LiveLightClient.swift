@@ -9,7 +9,7 @@ public struct LiveLightClient: LightProviding {
 	private let session: URLSession
 
 	/// - Parameters:
-	///   - baseURLString: HA root, e.g. `https://homeassistant.internal.ponderance.dev`.
+	///   - baseURLString: HA root, e.g. `https://homeassistant.example.com:8123`.
 	///     Tolerant of a missing scheme (defaults to `https://`), a trailing slash,
 	///     or a pasted endpoint ending in `/api` / `/api/states` — all normalize to root.
 	///   - token: HA long-lived access token, sent as `Authorization: Bearer …`.

@@ -15,6 +15,8 @@ struct RootView: View {
 
 	private var bp: BlueprintColors { BlueprintColors.resolve(colorScheme) }
 
+	@State private var showOnboarding = false
+
 	var body: some View {
 		TabView {
 			tab(EditorView(vm: vm, settings: settings), "Light", "lightbulb")
@@ -23,6 +25,11 @@ struct RootView: View {
 		}
 		.tint(bp.sax)
 		.environment(\.blueprint, bp)
+		.onAppear { showOnboarding = !settings.hasCompletedOnboarding }
+		.sheet(isPresented: $showOnboarding) {
+			OnboardingView(settings: settings)
+				.environment(\.blueprint, bp)
+		}
 		.task { await vm.refresh() }
 		.onChange(of: settings.useMockData) { _, _ in vm.applySettings(settings) }
 		.onChange(of: settings.baseURLString) { _, _ in vm.applySettings(settings) }

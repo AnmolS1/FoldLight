@@ -115,7 +115,17 @@ public extension LightState {
 		supportedColorModes: ["onoff"]
 	)
 
-	static let samples = [sampleColor, sampleOnOff]
+	/// A bundled sample temperature-only light (no color) so the editor's
+	/// capability gating — brightness + white slider, no color picker — is
+	/// explorable in mock/demo mode.
+	static let sampleTempOnly = LightState(
+		entityID: "light.desk_lamp", name: "Desk Lamp", isOn: true,
+		brightnessPct: 45, colorTempKelvin: 3400,
+		supportedColorModes: ["color_temp"],
+		minKelvin: 2700, maxKelvin: 6500
+	)
+
+	static let samples = [sampleColor, sampleTempOnly, sampleOnOff]
 }
 
 public extension Color {

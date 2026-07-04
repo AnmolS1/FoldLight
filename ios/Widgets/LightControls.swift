@@ -116,31 +116,34 @@ struct ApplyPresetControl: ControlWidget {
 	}
 }
 
-/// Launch the Home Assistant web UI.
+/// Open the first user launcher (or the configured Home Assistant URL when no
+/// launchers are saved). Falls back to a no-op when nothing is configured.
 @available(iOS 18.0, *)
-struct OpenHomeAssistantControl: ControlWidget {
-	var body: some ControlWidgetConfiguration {
-		StaticControlConfiguration(kind: "dev.ponderance.foldlight.control.openha") {
-			ControlWidgetButton(action: OpenURLIntent(LauncherTarget.homeAssistant.url!)) {
-				Label("Home Assistant", systemImage: "house.fill")
-			}
-		}
-		.displayName("Open Home Assistant")
-		.description("Open the Home Assistant dashboard.")
+public struct OpenFirstLauncherIntent: AppIntent {
+	public static var title: LocalizedStringResource { "Open Launcher" }
+	public static var openAppWhenRun: Bool { false }
+
+	public init() {}
+
+	public func perform() async throws -> some IntentResult & OpensIntent {
+		let target = LauncherStore.shared.load().first
+			?? LauncherStore.homeAssistantTarget(baseURLString: StoredConnection.load().baseURLString)
+		guard let url = target?.url else { return .result(opensIntent: OpenURLIntent()) }
+		return .result(opensIntent: OpenURLIntent(url))
 	}
 }
 
-/// Launch the 3D-printer (Bambuddy) web UI.
+/// Launch the user's first launcher tile (Settings → Launchers).
 @available(iOS 18.0, *)
-struct OpenPrinterControl: ControlWidget {
+struct OpenLauncherControl: ControlWidget {
 	var body: some ControlWidgetConfiguration {
-		StaticControlConfiguration(kind: "dev.ponderance.foldlight.control.openprinter") {
-			ControlWidgetButton(action: OpenURLIntent(LauncherTarget.printer.url!)) {
-				Label("Printer", systemImage: "printer.fill")
+		StaticControlConfiguration(kind: "dev.ponderance.foldlight.control.openha") {
+			ControlWidgetButton(action: OpenFirstLauncherIntent()) {
+				Label("Open Launcher", systemImage: "arrow.up.right.square")
 			}
 		}
-		.displayName("Open Printer")
-		.description("Open the Bambuddy printer page.")
+		.displayName("Open Launcher")
+		.description("Open your first launcher tile.")
 	}
 }
 #endif

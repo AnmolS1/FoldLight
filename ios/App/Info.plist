@@ -39,14 +39,25 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<!-- Cleartext HTTP is allowed ONLY to Tailscale MagicDNS hosts (*.ts.net). Such
-	     traffic rides Tailscale's WireGuard tunnel, so the Bearer token is encrypted
-	     on the wire despite being plain http. ATS otherwise stays on (no global
-	     arbitrary-loads). The default base URL is a ts.net host; HTTPS hosts (e.g.
-	     the Caddy hostname) need no exception. A raw Tailscale IP literal would need
-	     its own exception re-added here. -->
+	<!-- Connecting to a LAN/Tailscale server triggers the iOS local-network
+	     prompt; this string explains why. The first connection attempt (not app
+	     launch) is what surfaces the prompt. -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>FoldLight connects to your Home Assistant server on your local network to read and control your lights.</string>
+	<!-- Standard HTTPS only — export-compliance exempt. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<!-- Posture: require HTTPS by default. NSAllowsLocalNetworking permits
+		     cleartext to RFC-1918/.local hosts (a user's LAN Home Assistant)
+		     without a global exception; the ts.net entry additionally allows
+		     plain HTTP to Tailscale MagicDNS hosts, whose traffic rides the
+		     encrypted WireGuard tunnel (ts.net is public DNS, so
+		     NSAllowsLocalNetworking doesn't cover it). Never
+		     NSAllowsArbitraryLoads. -->
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>ts.net</key>
