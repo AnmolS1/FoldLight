@@ -27,7 +27,12 @@ struct EditorView: View {
 
 	private var light: LightState? {
 		if let selectedID, let l = vm.light(withID: selectedID) { return l }
-		// Default to the main color-capable light (matches the widget's main light).
+		// Default to the configured main light (Settings → Lights), matching the
+		// widget/controls; fall back to the first color-capable light.
+		if let chosen = LightPrefsStore.shared.load().mainLightID,
+		   let l = vm.light(withID: chosen) {
+			return l
+		}
 		return vm.lights.first(where: { $0.supportsColor || $0.supportsColorTemp }) ?? vm.lights.first
 	}
 

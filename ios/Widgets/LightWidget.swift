@@ -10,16 +10,32 @@ struct LightWidget: Widget {
 	let kind = "dev.ponderance.foldlight.LightWidget"
 
 	var body: some WidgetConfiguration {
-		StaticConfiguration(kind: kind, provider: LightTimelineProvider()) { entry in
-			LightWidgetView(entry: entry)
-				.environment(\.blueprint, .dark)
-				.containerBackground(for: .widget) {
-					GraphPaperBackground().environment(\.blueprint, .dark)
-				}
+		// Same kind string as the previous StaticConfiguration — WidgetKit
+		// migrates already-placed widgets in place; nil intent parameters
+		// reproduce the old behavior (main light + favorite presets).
+		AppIntentConfiguration(kind: kind, intent: LightWidgetConfigurationIntent.self,
+		                       provider: LightTimelineProvider()) { entry in
+			LightWidgetEntryView(entry: entry)
 		}
 		.configurationDisplayName("Light")
-		.description("Toggle, dim, and recolor your main light.")
+		.description("Toggle, dim, and recolor a chosen light.")
 		.supportedFamilies([.systemSmall, .systemMedium])
+	}
+}
+
+/// Resolves the blueprint palette from the system scheme (light + dark) for
+/// both the content and the container background, then renders the widget.
+struct LightWidgetEntryView: View {
+	@Environment(\.colorScheme) private var scheme
+	var entry: LightEntry
+
+	var body: some View {
+		let bp = BlueprintColors.resolve(scheme)
+		LightWidgetView(entry: entry)
+			.environment(\.blueprint, bp)
+			.containerBackground(for: .widget) {
+				SchemeResolvedGraphPaper()
+			}
 	}
 }
 

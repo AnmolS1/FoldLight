@@ -40,6 +40,29 @@ struct SettingsView: View {
 				}
 				.disabled(settings.useMockData)
 				.opacity(settings.useMockData ? 0.5 : 1)
+
+				BlueprintFormSection("Lights & launchers") {
+					NavigationLink {
+						LightsManagerView(settings: settings)
+					} label: {
+						BlueprintNavRow(
+							"Lights",
+							subtitle: "Pick the main light, reorder favorites, rename",
+							systemImage: "lightbulb"
+						)
+					}
+					.buttonStyle(.plain)
+					NavigationLink {
+						LaunchersManagerView(settings: settings)
+					} label: {
+						BlueprintNavRow(
+							"Launchers",
+							subtitle: "Tiles that open your services' web UIs",
+							systemImage: "square.grid.2x2"
+						)
+					}
+					.buttonStyle(.plain)
+				}
 			}
 			.padding(16)
 			.frame(maxWidth: 520)
