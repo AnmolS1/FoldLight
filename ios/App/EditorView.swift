@@ -57,6 +57,7 @@ struct EditorView: View {
 					}
 				}
 				.padding(16)
+				.iPadColumn()
 			}
 			.task(id: light?.entityID) { syncFromLight() }
 			.onAppear { presets = PresetStore.shared.load() }

@@ -26,6 +26,7 @@ struct PanelView: View {
 				}
 			}
 			.padding(16)
+			.iPadColumn()
 		}
 		.onAppear { targets = LauncherStore.shared.load() }
 	}

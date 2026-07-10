@@ -67,6 +67,7 @@ struct SettingsView: View {
 			.padding(16)
 			.frame(maxWidth: 520)
 			.frame(maxWidth: .infinity)
+			.iPadColumn(maxWidth: 520)
 		}
 	}
 

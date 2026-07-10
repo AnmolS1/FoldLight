@@ -1,5 +1,5 @@
 #!/bin/bash
-# Capture the four App Store listing screenshots on an iPhone simulator.
+# Capture the App Store listing screenshots on an iPhone simulator.
 #
 # Drives the app's `--uitest-screenshots --screen <name>` launch argument (see
 # ios/App/ScreenshotSupport.swift): forces mock mode, seeds presets + fake launcher
@@ -7,8 +7,16 @@
 # resolution PNG. Runs entirely on the simulator's isolated container — it never
 # touches your real Home Assistant install or the macOS app's data.
 #
-# Output: fastlane/screenshots/0{1..4}*.png (6.9" Pro Max, portrait, opaque).
+# The Pro Max captures natively at 1320x2868 (6.9"); each shot is then cover-scaled
+# and center-cropped to TARGET_W x TARGET_H — 1284x2778 by default, which is the
+# size App Store Connect's 6.5"/6.7" iPhone slot accepts. Override the target env
+# vars to keep the native 6.9" size (TARGET_W=1320 TARGET_H=2868).
+#
+# Output: fastlane/screenshots/0{1..3}*.png (portrait, opaque).
 set -euo pipefail
+
+TARGET_W="${TARGET_W:-1284}"
+TARGET_H="${TARGET_H:-2778}"
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd "$HERE/../.." && pwd)"
@@ -54,13 +62,16 @@ capture () {
     --uitest-screenshots --screen "$screen" >/dev/null
   sleep 3.5
   xcrun simctl io "$UDID" screenshot "$OUT/$file" >/dev/null
-  swift "$HERE/flatten.swift" "$OUT/$file"   # simctl PNGs carry an alpha channel; ASC rejects it
+  # Cover-scale to target width, center-crop to target height (uniform scale, no
+  # distortion), then flatten — simctl PNGs carry an alpha channel and ASC rejects it.
+  sips --resampleWidth "$TARGET_W" "$OUT/$file" >/dev/null
+  sips -c "$TARGET_H" "$TARGET_W" "$OUT/$file" >/dev/null
+  swift "$HERE/flatten.swift" "$OUT/$file"
 }
 
 capture editor   "01LightEditor.png"
-capture presets  "02PresetLibrary.png"
-capture panel    "03Panel.png"
-capture settings "04Settings.png"
+capture panel    "02Panel.png"
+capture settings "03Settings.png"
 
 echo "=== dimensions ==="
 for f in "$OUT"/0*.png; do
