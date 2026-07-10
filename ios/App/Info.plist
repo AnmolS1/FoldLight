@@ -14,6 +14,12 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleDisplayName</key>
 	<string>FoldLight</string>
+	<!-- Required for Mac App Store validation. The matching
+	     INFOPLIST_KEY_LSApplicationCategoryType build setting is ignored because
+	     this target uses a hand-written Info.plist (GENERATE_INFOPLIST_FILE = NO),
+	     so the key must live here directly. -->
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>

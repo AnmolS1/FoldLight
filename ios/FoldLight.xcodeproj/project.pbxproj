@@ -1,0 +1,1112 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00F2C57F4AA99E97DBB91141 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AACCDEF448D4717F1AD77 /* SettingsView.swift */; };
+		023A156B34AC96AF7E2EAD99 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3540911D7215515109E88B /* PanelView.swift */; };
+		06718387686C9548CE3E46DD /* LightWidgetConfigurationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C0BA4E89C47E936900C8C3 /* LightWidgetConfigurationIntent.swift */; };
+		06CB595EF82BECFA7B177B6D /* LightPrefsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */; };
+		085569957E7549B92611562C /* FoldKitResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F3FD8E705057755F555A68 /* FoldKitResources.swift */; };
+		09285006C3D7B4E04B1310CA /* PresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C233046B2954961897FD18 /* PresetStore.swift */; };
+		0A445391E5DDE4CDD24EE732 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E875EC3EF51B335C775E6659 /* AppSettings.swift */; };
+		0EFD541FF3A98CE17F87055A /* LightIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446300FF731E8E89D545EE8 /* LightIntents.swift */; };
+		1AEED598AB1C666F3EB01975 /* LauncherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */; };
+		1D0B2D134CA0781086023AB3 /* LightTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */; };
+		2066122466D78BFB5D9B4044 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F36D929FACF37B20C8F5 /* OnboardingView.swift */; };
+		25519BDD3567B572386BF78D /* LightPrefsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB689D370686090FA1C0FA /* LightPrefsStore.swift */; };
+		28221090E78C4A141F4B44AD /* FoldKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; };
+		2D8E073EA84F182EEA0809C1 /* IBMPlexMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664A501230F19A1A760FDFB5 /* IBMPlexMono-Regular.ttf */; };
+		2FF04B04BC8EBE7098EB5390 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9993BD66957443C84887B978 /* Fonts.swift */; };
+		302997395D44FD42C78668C4 /* FoldKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; };
+		32F87EAA8E5A1F447D8380DF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9D3D1AA821AC9A926E9E19B5 /* PrivacyInfo.xcprivacy */; };
+		34E550116E1AD99C71165B6D /* PresetAndCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52365D14AE83DDDFF38668BC /* PresetAndCacheTests.swift */; };
+		3AE9D465E16FBEA32ECECB0B /* LightDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */; };
+		445CA533407665897A89452D /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A172A113276B57CA93306 /* IBMPlexMono-SemiBold.ttf */; };
+		48F6AF5D131F4273113FAD3B /* URLNormalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */; };
+		4C27A826D8CDF030CB38D566 /* BricolageGrotesque.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F656A40D877175605C0C6F6 /* BricolageGrotesque.ttf */; };
+		4D8E73D735BAC6B5470D70E7 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6681D0F28BB8732931A0DF /* KeychainStore.swift */; };
+		4FF40FEC8412BD1731F95437 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AA4DF2C37D37A28A157D0717 /* PrivacyInfo.xcprivacy */; };
+		50505656380A8C8A1CE2985A /* LightsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238624192771C51E0153A704 /* LightsManagerView.swift */; };
+		569CB06CFF1AC63A52BAA173 /* FoldLightWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5D1BAF926B3FF3CFBFBF0A52 /* LaunchersManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793366696457FB8ED6F5A92D /* LaunchersManagerView.swift */; };
+		5D2E093DEB011A77450DF175 /* LightControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A2BE07247DE719C1809136 /* LightControls.swift */; };
+		6A3EA72ADB2BC70684F591E5 /* WidgetReload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7B9C4F90EACECC1A62B384 /* WidgetReload.swift */; };
+		6EBDB3520C6538B61BB27B09 /* LightIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446300FF731E8E89D545EE8 /* LightIntents.swift */; };
+		6FE7A9192A14718217F0EA8D /* LightPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D48FB49330E0AB6316719 /* LightPreset.swift */; };
+		6FEBD5D7B8DC4FF8B9E08BE0 /* LightWidgetConfigurationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C0BA4E89C47E936900C8C3 /* LightWidgetConfigurationIntent.swift */; };
+		7748835DE729D6D6C152B5B6 /* MockLightClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8D98596369C62EC9864052 /* MockLightClient.swift */; };
+		780422AC34BE6388E240FE33 /* state-yetstrhom.json in Resources */ = {isa = PBXBuildFile; fileRef = 09A19F5A9531F97A9051495E /* state-yetstrhom.json */; };
+		7BF3D2C595D64C98E628B50E /* LightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21606E59C74F0D0A2D45D0B9 /* LightsViewModel.swift */; };
+		8076EAA5BCA4ACA98B2CDF14 /* LightProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946F6FAC5C7920192E12680D /* LightProviding.swift */; };
+		8C4442823AF9AE1CFCFEA05B /* FoldKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		964755F688798D236C74538B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A83968EC857151B23380E47 /* RootView.swift */; };
+		979B248C9E580FDAA0F3D581 /* LightAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */; };
+		994CAA07EBF52CE6029F563C /* FoldLightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3DA12846803FBE6FFDBEFB /* FoldLightApp.swift */; };
+		9B0AF79799095E216397E72D /* FoldKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF8D0AE1DD4A1B7361EEB107 /* FoldKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; };
+		BC30BE60B81A0A1EC615C3E1 /* LauncherStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */; };
+		BCA90FAC5B3E3CD9A4D1A975 /* HankenGrotesk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46289637821DC5FC02C904A9 /* HankenGrotesk.ttf */; };
+		BD833E9C9B3B4A4C46E5BCC9 /* IntentDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28EB4F0C7DADCDA66175229 /* IntentDiagnostics.swift */; };
+		BED903FE1F0C28A7A43946A9 /* FoldLightWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BD3F9B663EB24C159A2BDD /* FoldLightWidgetBundle.swift */; };
+		BFC3783C023C2011E22FF00F /* LightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDA86F7E00422473867C21 /* LightCache.swift */; };
+		C02B8ECD61A58A9DB471B0A0 /* state-x1c_chamber_light.json in Resources */ = {isa = PBXBuildFile; fileRef = 782FD917325F4617C8F8F962 /* state-x1c_chamber_light.json */; };
+		C7767D8D44D8EA6879AC5D1B /* BlueprintForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A1E6FFC9886C5B8B4BEA2 /* BlueprintForm.swift */; };
+		C8F5F5537754EAD3D7EE7AD7 /* PresetAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1F3E2AB854B035A51BDD27 /* PresetAppEntity.swift */; };
+		D4AE37F091F9802BAB0D3EB1 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DAC6EB9BB499904222407 /* EditorView.swift */; };
+		D6B760A90E2245A3F26DF7C1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FB2D9D45CFC90B9A9827B4B9 /* PrivacyInfo.xcprivacy */; };
+		D865624ED70974BE537EC0A3 /* BlueprintColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653902FAACA0881BCA17573B /* BlueprintColors.swift */; };
+		D8E7D55FB661AE10A5FFFD4F /* LightState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CD69F1148210A5743CA85C /* LightState.swift */; };
+		D958EEF0CC6EB7AAF113D061 /* BlueprintDecor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9542D931E94FF59DBF18B6 /* BlueprintDecor.swift */; };
+		DBB88162AC328E10F16C3D17 /* LiveLightClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ECF383F97A3EAA8418F8C4 /* LiveLightClient.swift */; };
+		DBDCDF45A7EFFD0C5585A341 /* LightAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */; };
+		E407C1A688ABB393CEC397C9 /* LightWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5FB9C9F95736704E461A3B /* LightWidget.swift */; };
+		E407DE968B81CC8CC7532596 /* state-yetstrhom-on.json in Resources */ = {isa = PBXBuildFile; fileRef = FB278B87C13606FCCE5338B8 /* state-yetstrhom-on.json */; };
+		E7B197394C4FECA0C904E0C6 /* StoredConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215BC41ACD87C6A615A6DBD5 /* StoredConnection.swift */; };
+		E9A7684C4349216EE64F07D2 /* LauncherTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048ECED6F9FE3590B6E7A6E /* LauncherTarget.swift */; };
+		E9ED2038316AA6C2EC8C4FE0 /* PresetAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1F3E2AB854B035A51BDD27 /* PresetAppEntity.swift */; };
+		EF564E780E17830E9F397BC8 /* BrightnessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */; };
+		F2A8A79D06CC3E8740C253F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A1B7D949AE0860966C248B6 /* Assets.xcassets */; };
+		FFF20A8078D2F738BF291184 /* LauncherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05812A1792521047E112E894 /* LauncherWidget.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2E24EBD012BF96F18AE3FBFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCB84DBB55FD9CBC40413F69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5AA8F3D6A95A9E5847DB91E;
+			remoteInfo = FoldLightWidgets;
+		};
+		60F851955DE9AC8BA6361871 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCB84DBB55FD9CBC40413F69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2F24C9870F0FBE15480502B;
+			remoteInfo = FoldKit;
+		};
+		7C26872BE6769AD78ECA2A87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCB84DBB55FD9CBC40413F69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2F24C9870F0FBE15480502B;
+			remoteInfo = FoldKit;
+		};
+		80518B2C971B31D133B61E5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCB84DBB55FD9CBC40413F69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2F24C9870F0FBE15480502B;
+			remoteInfo = FoldKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2C4300ADCB51451EF804C914 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8C4442823AF9AE1CFCFEA05B /* FoldKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC45D37FA5E41C18D9A9C6B5 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				569CB06CFF1AC63A52BAA173 /* FoldLightWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C39910C7DFFB48CFECB0310B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9B0AF79799095E216397E72D /* FoldKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		045D48FB49330E0AB6316719 /* LightPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPreset.swift; sourceTree = "<group>"; };
+		05812A1792521047E112E894 /* LauncherWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherWidget.swift; sourceTree = "<group>"; };
+		09A19F5A9531F97A9051495E /* state-yetstrhom.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "state-yetstrhom.json"; sourceTree = "<group>"; };
+		09A2BE07247DE719C1809136 /* LightControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightControls.swift; sourceTree = "<group>"; };
+		0BBDA86F7E00422473867C21 /* LightCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightCache.swift; sourceTree = "<group>"; };
+		15BD3F9B663EB24C159A2BDD /* FoldLightWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldLightWidgetBundle.swift; sourceTree = "<group>"; };
+		1A3DA12846803FBE6FFDBEFB /* FoldLightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldLightApp.swift; sourceTree = "<group>"; };
+		1D8D98596369C62EC9864052 /* MockLightClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLightClient.swift; sourceTree = "<group>"; };
+		1F1601EB5F3A5502A17E50CF /* FoldLightWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoldLightWidgets.entitlements; sourceTree = "<group>"; };
+		215BC41ACD87C6A615A6DBD5 /* StoredConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredConnection.swift; sourceTree = "<group>"; };
+		21606E59C74F0D0A2D45D0B9 /* LightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightsViewModel.swift; sourceTree = "<group>"; };
+		238624192771C51E0153A704 /* LightsManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightsManagerView.swift; sourceTree = "<group>"; };
+		2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherStore.swift; sourceTree = "<group>"; };
+		28ECF383F97A3EAA8418F8C4 /* LiveLightClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveLightClient.swift; sourceTree = "<group>"; };
+		2E1A172A113276B57CA93306 /* IBMPlexMono-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-SemiBold.ttf"; sourceTree = "<group>"; };
+		31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherStoreTests.swift; sourceTree = "<group>"; };
+		45D7F36D929FACF37B20C8F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		46289637821DC5FC02C904A9 /* HankenGrotesk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HankenGrotesk.ttf; sourceTree = "<group>"; };
+		4A5A1E6FFC9886C5B8B4BEA2 /* BlueprintForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintForm.swift; sourceTree = "<group>"; };
+		4A83968EC857151B23380E47 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		4C9542D931E94FF59DBF18B6 /* BlueprintDecor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintDecor.swift; sourceTree = "<group>"; };
+		502A50B378B84D19104D33D7 /* FoldKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoldKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52365D14AE83DDDFF38668BC /* PresetAndCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAndCacheTests.swift; sourceTree = "<group>"; };
+		653902FAACA0881BCA17573B /* BlueprintColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintColors.swift; sourceTree = "<group>"; };
+		664A501230F19A1A760FDFB5 /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
+		7048ECED6F9FE3590B6E7A6E /* LauncherTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTarget.swift; sourceTree = "<group>"; };
+		770AACCDEF448D4717F1AD77 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		782FD917325F4617C8F8F962 /* state-x1c_chamber_light.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "state-x1c_chamber_light.json"; sourceTree = "<group>"; };
+		793366696457FB8ED6F5A92D /* LaunchersManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchersManagerView.swift; sourceTree = "<group>"; };
+		7A1B7D949AE0860966C248B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7D6681D0F28BB8732931A0DF /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		7F656A40D877175605C0C6F6 /* BricolageGrotesque.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BricolageGrotesque.ttf; sourceTree = "<group>"; };
+		81F3FD8E705057755F555A68 /* FoldKitResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldKitResources.swift; sourceTree = "<group>"; };
+		8446300FF731E8E89D545EE8 /* LightIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightIntents.swift; sourceTree = "<group>"; };
+		86CB689D370686090FA1C0FA /* LightPrefsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPrefsStore.swift; sourceTree = "<group>"; };
+		877DAC6EB9BB499904222407 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPrefsTests.swift; sourceTree = "<group>"; };
+		8BE3ED17BC34C66A8BC7DF5B /* FoldLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoldLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9181CA8C55D8D26C42624F0E /* FoldKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoldKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		946F6FAC5C7920192E12680D /* LightProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightProviding.swift; sourceTree = "<group>"; };
+		9993BD66957443C84887B978 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		9D3D1AA821AC9A926E9E19B5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A28EB4F0C7DADCDA66175229 /* IntentDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentDiagnostics.swift; sourceTree = "<group>"; };
+		A9C0BA4E89C47E936900C8C3 /* LightWidgetConfigurationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightWidgetConfigurationIntent.swift; sourceTree = "<group>"; };
+		AA4DF2C37D37A28A157D0717 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		ABCD8ED74CDDCCC7E60D8A01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		AD3540911D7215515109E88B /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
+		AF1F3E2AB854B035A51BDD27 /* PresetAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAppEntity.swift; sourceTree = "<group>"; };
+		B3C220D56396E3D1A88108A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B3CD69F1148210A5743CA85C /* LightState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightState.swift; sourceTree = "<group>"; };
+		BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNormalizationTests.swift; sourceTree = "<group>"; };
+		C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTimelineProvider.swift; sourceTree = "<group>"; };
+		D4C233046B2954961897FD18 /* PresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetStore.swift; sourceTree = "<group>"; };
+		DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FoldLightWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightDecodingTests.swift; sourceTree = "<group>"; };
+		E7A37C842E6F574F0AF16A65 /* FoldLight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoldLight.entitlements; sourceTree = "<group>"; };
+		E875EC3EF51B335C775E6659 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightAppEntity.swift; sourceTree = "<group>"; };
+		ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessTests.swift; sourceTree = "<group>"; };
+		FB278B87C13606FCCE5338B8 /* state-yetstrhom-on.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "state-yetstrhom-on.json"; sourceTree = "<group>"; };
+		FB2D9D45CFC90B9A9827B4B9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FC5FB9C9F95736704E461A3B /* LightWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightWidget.swift; sourceTree = "<group>"; };
+		FF7B9C4F90EACECC1A62B384 /* WidgetReload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetReload.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1000AD4DC0E27DE8D7803038 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF8D0AE1DD4A1B7361EEB107 /* FoldKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA4C2414B1EE08F1282E6FB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				302997395D44FD42C78668C4 /* FoldKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3CE0AD6066A9B1687CED2CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28221090E78C4A141F4B44AD /* FoldKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034B882F9734A0E3192547F5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7F656A40D877175605C0C6F6 /* BricolageGrotesque.ttf */,
+				46289637821DC5FC02C904A9 /* HankenGrotesk.ttf */,
+				664A501230F19A1A760FDFB5 /* IBMPlexMono-Regular.ttf */,
+				2E1A172A113276B57CA93306 /* IBMPlexMono-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		15C521ECFD29F0FEE498B969 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				653902FAACA0881BCA17573B /* BlueprintColors.swift */,
+				9993BD66957443C84887B978 /* Fonts.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		254F6CC7B08E9B23465A4625 /* SharedIntents */ = {
+			isa = PBXGroup;
+			children = (
+				EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */,
+				8446300FF731E8E89D545EE8 /* LightIntents.swift */,
+				A9C0BA4E89C47E936900C8C3 /* LightWidgetConfigurationIntent.swift */,
+				AF1F3E2AB854B035A51BDD27 /* PresetAppEntity.swift */,
+			);
+			path = SharedIntents;
+			sourceTree = "<group>";
+		};
+		26D2F7383032846A292DD866 = {
+			isa = PBXGroup;
+			children = (
+				B707175205EA8F212F25DB1D /* App */,
+				ABCBAEE5100A70996051569D /* FoldKit */,
+				FB5C15B3BFD32DEC20A365CD /* FoldKitTests */,
+				254F6CC7B08E9B23465A4625 /* SharedIntents */,
+				73CE3C833243B684F9363C3E /* Widgets */,
+				E806D49215A6963C60DFB599 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2A19A63B958C3087D81B87C3 /* Net */ = {
+			isa = PBXGroup;
+			children = (
+				0BBDA86F7E00422473867C21 /* LightCache.swift */,
+				946F6FAC5C7920192E12680D /* LightProviding.swift */,
+				28ECF383F97A3EAA8418F8C4 /* LiveLightClient.swift */,
+				1D8D98596369C62EC9864052 /* MockLightClient.swift */,
+			);
+			path = Net;
+			sourceTree = "<group>";
+		};
+		2ABAAA7A0C309370B57CDE58 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C9542D931E94FF59DBF18B6 /* BlueprintDecor.swift */,
+				4A5A1E6FFC9886C5B8B4BEA2 /* BlueprintForm.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		48608BE7DDF13A142D35B01A /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				A28EB4F0C7DADCDA66175229 /* IntentDiagnostics.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		6C4DABAB149DF0D247135D3B /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				782FD917325F4617C8F8F962 /* state-x1c_chamber_light.json */,
+				FB278B87C13606FCCE5338B8 /* state-yetstrhom-on.json */,
+				09A19F5A9531F97A9051495E /* state-yetstrhom.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		73CE3C833243B684F9363C3E /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				15BD3F9B663EB24C159A2BDD /* FoldLightWidgetBundle.swift */,
+				1F1601EB5F3A5502A17E50CF /* FoldLightWidgets.entitlements */,
+				ABCD8ED74CDDCCC7E60D8A01 /* Info.plist */,
+				05812A1792521047E112E894 /* LauncherWidget.swift */,
+				09A2BE07247DE719C1809136 /* LightControls.swift */,
+				C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */,
+				FC5FB9C9F95736704E461A3B /* LightWidget.swift */,
+				9D3D1AA821AC9A926E9E19B5 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		968A7A2A492FAACB8B4A5C06 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E875EC3EF51B335C775E6659 /* AppSettings.swift */,
+				7D6681D0F28BB8732931A0DF /* KeychainStore.swift */,
+				2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */,
+				86CB689D370686090FA1C0FA /* LightPrefsStore.swift */,
+				D4C233046B2954961897FD18 /* PresetStore.swift */,
+				215BC41ACD87C6A615A6DBD5 /* StoredConnection.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A4DA5867CBF5183CE411D27C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7048ECED6F9FE3590B6E7A6E /* LauncherTarget.swift */,
+				045D48FB49330E0AB6316719 /* LightPreset.swift */,
+				B3CD69F1148210A5743CA85C /* LightState.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ABCBAEE5100A70996051569D /* FoldKit */ = {
+			isa = PBXGroup;
+			children = (
+				48608BE7DDF13A142D35B01A /* Intents */,
+				A4DA5867CBF5183CE411D27C /* Model */,
+				2A19A63B958C3087D81B87C3 /* Net */,
+				D25C150FBA87D07A3D9A1E40 /* Resources */,
+				968A7A2A492FAACB8B4A5C06 /* Settings */,
+				15C521ECFD29F0FEE498B969 /* Theme */,
+				2ABAAA7A0C309370B57CDE58 /* Views */,
+				FF7B9C4F90EACECC1A62B384 /* WidgetReload.swift */,
+			);
+			path = FoldKit;
+			sourceTree = "<group>";
+		};
+		B707175205EA8F212F25DB1D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7A1B7D949AE0860966C248B6 /* Assets.xcassets */,
+				877DAC6EB9BB499904222407 /* EditorView.swift */,
+				E7A37C842E6F574F0AF16A65 /* FoldLight.entitlements */,
+				1A3DA12846803FBE6FFDBEFB /* FoldLightApp.swift */,
+				B3C220D56396E3D1A88108A5 /* Info.plist */,
+				793366696457FB8ED6F5A92D /* LaunchersManagerView.swift */,
+				238624192771C51E0153A704 /* LightsManagerView.swift */,
+				21606E59C74F0D0A2D45D0B9 /* LightsViewModel.swift */,
+				45D7F36D929FACF37B20C8F5 /* OnboardingView.swift */,
+				AD3540911D7215515109E88B /* PanelView.swift */,
+				AA4DF2C37D37A28A157D0717 /* PrivacyInfo.xcprivacy */,
+				4A83968EC857151B23380E47 /* RootView.swift */,
+				770AACCDEF448D4717F1AD77 /* SettingsView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D25C150FBA87D07A3D9A1E40 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				034B882F9734A0E3192547F5 /* Fonts */,
+				81F3FD8E705057755F555A68 /* FoldKitResources.swift */,
+				FB2D9D45CFC90B9A9827B4B9 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E806D49215A6963C60DFB599 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				502A50B378B84D19104D33D7 /* FoldKit.framework */,
+				9181CA8C55D8D26C42624F0E /* FoldKitTests.xctest */,
+				8BE3ED17BC34C66A8BC7DF5B /* FoldLight.app */,
+				DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB5C15B3BFD32DEC20A365CD /* FoldKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				6C4DABAB149DF0D247135D3B /* Fixtures */,
+				ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */,
+				31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */,
+				E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */,
+				89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */,
+				52365D14AE83DDDFF38668BC /* PresetAndCacheTests.swift */,
+				BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */,
+			);
+			path = FoldKitTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A78190C1F1F6F7089BAC248F /* FoldKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BE35AED406FF325F251A3C4 /* Build configuration list for PBXNativeTarget "FoldKitTests" */;
+			buildPhases = (
+				66974F1D637C2ED35237713E /* Sources */,
+				08C5DF0B9B8931BC0661A007 /* Resources */,
+				D3CE0AD6066A9B1687CED2CC /* Frameworks */,
+				C39910C7DFFB48CFECB0310B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1831A0E811E7E9834FC6B365 /* PBXTargetDependency */,
+			);
+			name = FoldKitTests;
+			packageProductDependencies = (
+			);
+			productName = FoldKitTests;
+			productReference = 9181CA8C55D8D26C42624F0E /* FoldKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CA7A8D1102992C144AD0DCD8 /* FoldLight */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC2A514A7DEEADD1FB416C0A /* Build configuration list for PBXNativeTarget "FoldLight" */;
+			buildPhases = (
+				37B255FFEA6F216064971D4D /* Sources */,
+				E96FA424062F3646E7F8464C /* Resources */,
+				BA4C2414B1EE08F1282E6FB7 /* Frameworks */,
+				BC45D37FA5E41C18D9A9C6B5 /* Embed Foundation Extensions */,
+				2C4300ADCB51451EF804C914 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C723144FC936BFCB414FA2F2 /* PBXTargetDependency */,
+				E3FFDE7784767FC5A41E14C6 /* PBXTargetDependency */,
+			);
+			name = FoldLight;
+			packageProductDependencies = (
+			);
+			productName = FoldLight;
+			productReference = 8BE3ED17BC34C66A8BC7DF5B /* FoldLight.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2F24C9870F0FBE15480502B /* FoldKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18254FBA2C3C45384E7A1F7D /* Build configuration list for PBXNativeTarget "FoldKit" */;
+			buildPhases = (
+				FA8AED119237FC97B1855F15 /* Sources */,
+				479AC0509D11A419146AE0CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FoldKit;
+			packageProductDependencies = (
+			);
+			productName = FoldKit;
+			productReference = 502A50B378B84D19104D33D7 /* FoldKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E5AA8F3D6A95A9E5847DB91E /* FoldLightWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F595F19BAC44FE33118A77D /* Build configuration list for PBXNativeTarget "FoldLightWidgets" */;
+			buildPhases = (
+				E607D66F7452B1356C8A9A12 /* Sources */,
+				75EE33EAF8A27F64483E66E1 /* Resources */,
+				1000AD4DC0E27DE8D7803038 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0CECEF232692B1D280F7B378 /* PBXTargetDependency */,
+			);
+			name = FoldLightWidgets;
+			packageProductDependencies = (
+			);
+			productName = FoldLightWidgets;
+			productReference = DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CCB84DBB55FD9CBC40413F69 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					A78190C1F1F6F7089BAC248F = {
+						DevelopmentTeam = G2KBQH7KWT;
+						ProvisioningStyle = Automatic;
+					};
+					CA7A8D1102992C144AD0DCD8 = {
+						DevelopmentTeam = G2KBQH7KWT;
+						ProvisioningStyle = Automatic;
+					};
+					D2F24C9870F0FBE15480502B = {
+						DevelopmentTeam = G2KBQH7KWT;
+						ProvisioningStyle = Automatic;
+					};
+					E5AA8F3D6A95A9E5847DB91E = {
+						DevelopmentTeam = G2KBQH7KWT;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0FE1D5CFEC7222B568814C25 /* Build configuration list for PBXProject "FoldLight" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 26D2F7383032846A292DD866;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E806D49215A6963C60DFB599 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2F24C9870F0FBE15480502B /* FoldKit */,
+				A78190C1F1F6F7089BAC248F /* FoldKitTests */,
+				CA7A8D1102992C144AD0DCD8 /* FoldLight */,
+				E5AA8F3D6A95A9E5847DB91E /* FoldLightWidgets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		08C5DF0B9B8931BC0661A007 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02B8ECD61A58A9DB471B0A0 /* state-x1c_chamber_light.json in Resources */,
+				E407DE968B81CC8CC7532596 /* state-yetstrhom-on.json in Resources */,
+				780422AC34BE6388E240FE33 /* state-yetstrhom.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		479AC0509D11A419146AE0CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C27A826D8CDF030CB38D566 /* BricolageGrotesque.ttf in Resources */,
+				BCA90FAC5B3E3CD9A4D1A975 /* HankenGrotesk.ttf in Resources */,
+				2D8E073EA84F182EEA0809C1 /* IBMPlexMono-Regular.ttf in Resources */,
+				445CA533407665897A89452D /* IBMPlexMono-SemiBold.ttf in Resources */,
+				D6B760A90E2245A3F26DF7C1 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75EE33EAF8A27F64483E66E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32F87EAA8E5A1F447D8380DF /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E96FA424062F3646E7F8464C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A8A79D06CC3E8740C253F3 /* Assets.xcassets in Resources */,
+				4FF40FEC8412BD1731F95437 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		37B255FFEA6F216064971D4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4AE37F091F9802BAB0D3EB1 /* EditorView.swift in Sources */,
+				994CAA07EBF52CE6029F563C /* FoldLightApp.swift in Sources */,
+				5D1BAF926B3FF3CFBFBF0A52 /* LaunchersManagerView.swift in Sources */,
+				DBDCDF45A7EFFD0C5585A341 /* LightAppEntity.swift in Sources */,
+				0EFD541FF3A98CE17F87055A /* LightIntents.swift in Sources */,
+				6FEBD5D7B8DC4FF8B9E08BE0 /* LightWidgetConfigurationIntent.swift in Sources */,
+				50505656380A8C8A1CE2985A /* LightsManagerView.swift in Sources */,
+				7BF3D2C595D64C98E628B50E /* LightsViewModel.swift in Sources */,
+				2066122466D78BFB5D9B4044 /* OnboardingView.swift in Sources */,
+				023A156B34AC96AF7E2EAD99 /* PanelView.swift in Sources */,
+				C8F5F5537754EAD3D7EE7AD7 /* PresetAppEntity.swift in Sources */,
+				964755F688798D236C74538B /* RootView.swift in Sources */,
+				00F2C57F4AA99E97DBB91141 /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66974F1D637C2ED35237713E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF564E780E17830E9F397BC8 /* BrightnessTests.swift in Sources */,
+				BC30BE60B81A0A1EC615C3E1 /* LauncherStoreTests.swift in Sources */,
+				3AE9D465E16FBEA32ECECB0B /* LightDecodingTests.swift in Sources */,
+				06CB595EF82BECFA7B177B6D /* LightPrefsTests.swift in Sources */,
+				34E550116E1AD99C71165B6D /* PresetAndCacheTests.swift in Sources */,
+				48F6AF5D131F4273113FAD3B /* URLNormalizationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E607D66F7452B1356C8A9A12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED903FE1F0C28A7A43946A9 /* FoldLightWidgetBundle.swift in Sources */,
+				FFF20A8078D2F738BF291184 /* LauncherWidget.swift in Sources */,
+				979B248C9E580FDAA0F3D581 /* LightAppEntity.swift in Sources */,
+				5D2E093DEB011A77450DF175 /* LightControls.swift in Sources */,
+				6EBDB3520C6538B61BB27B09 /* LightIntents.swift in Sources */,
+				1D0B2D134CA0781086023AB3 /* LightTimelineProvider.swift in Sources */,
+				E407C1A688ABB393CEC397C9 /* LightWidget.swift in Sources */,
+				06718387686C9548CE3E46DD /* LightWidgetConfigurationIntent.swift in Sources */,
+				E9ED2038316AA6C2EC8C4FE0 /* PresetAppEntity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA8AED119237FC97B1855F15 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A445391E5DDE4CDD24EE732 /* AppSettings.swift in Sources */,
+				D865624ED70974BE537EC0A3 /* BlueprintColors.swift in Sources */,
+				D958EEF0CC6EB7AAF113D061 /* BlueprintDecor.swift in Sources */,
+				C7767D8D44D8EA6879AC5D1B /* BlueprintForm.swift in Sources */,
+				085569957E7549B92611562C /* FoldKitResources.swift in Sources */,
+				2FF04B04BC8EBE7098EB5390 /* Fonts.swift in Sources */,
+				BD833E9C9B3B4A4C46E5BCC9 /* IntentDiagnostics.swift in Sources */,
+				4D8E73D735BAC6B5470D70E7 /* KeychainStore.swift in Sources */,
+				1AEED598AB1C666F3EB01975 /* LauncherStore.swift in Sources */,
+				E9A7684C4349216EE64F07D2 /* LauncherTarget.swift in Sources */,
+				BFC3783C023C2011E22FF00F /* LightCache.swift in Sources */,
+				25519BDD3567B572386BF78D /* LightPrefsStore.swift in Sources */,
+				6FE7A9192A14718217F0EA8D /* LightPreset.swift in Sources */,
+				8076EAA5BCA4ACA98B2CDF14 /* LightProviding.swift in Sources */,
+				D8E7D55FB661AE10A5FFFD4F /* LightState.swift in Sources */,
+				DBB88162AC328E10F16C3D17 /* LiveLightClient.swift in Sources */,
+				7748835DE729D6D6C152B5B6 /* MockLightClient.swift in Sources */,
+				09285006C3D7B4E04B1310CA /* PresetStore.swift in Sources */,
+				E7B197394C4FECA0C904E0C6 /* StoredConnection.swift in Sources */,
+				6A3EA72ADB2BC70684F591E5 /* WidgetReload.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0CECEF232692B1D280F7B378 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2F24C9870F0FBE15480502B /* FoldKit */;
+			targetProxy = 7C26872BE6769AD78ECA2A87 /* PBXContainerItemProxy */;
+		};
+		1831A0E811E7E9834FC6B365 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2F24C9870F0FBE15480502B /* FoldKit */;
+			targetProxy = 80518B2C971B31D133B61E5D /* PBXContainerItemProxy */;
+		};
+		C723144FC936BFCB414FA2F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2F24C9870F0FBE15480502B /* FoldKit */;
+			targetProxy = 60F851955DE9AC8BA6361871 /* PBXContainerItemProxy */;
+		};
+		E3FFDE7784767FC5A41E14C6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5AA8F3D6A95A9E5847DB91E /* FoldLightWidgets */;
+			targetProxy = 2E24EBD012BF96F18AE3FBFB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		12F2E103B15F13ADBB268FB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.kit;
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		18069AE044C1AE3F70057D1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widgets/FoldLightWidgets.entitlements;
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@loader_path/Frameworks",
+					"@loader_path/../../Frameworks",
+					"@loader_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.widgets;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		539C47171B8538566521DBDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = YES;
+				CODE_SIGN_ENTITLEMENTS = App/FoldLight.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8873C7FF28B7F3B85426F01F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widgets/FoldLightWidgets.entitlements;
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@loader_path/Frameworks",
+					"@loader_path/../../Frameworks",
+					"@loader_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.widgets;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9CAEC28F7DD140F41B43E6E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = G2KBQH7KWT;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		AD88167FC7642C05BD7B87DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.kittests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B239098F858A0248AA2DB351 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = YES;
+				CODE_SIGN_ENTITLEMENTS = App/FoldLight.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9965749FB2D4971455461B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = G2KBQH7KWT;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		F0EBFCA0273409BA12E78E36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.kit;
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		F22F33D6235884DD5E9A5547 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.kittests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0FE1D5CFEC7222B568814C25 /* Build configuration list for PBXProject "FoldLight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CAEC28F7DD140F41B43E6E4 /* Debug */,
+				C9965749FB2D4971455461B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		18254FBA2C3C45384E7A1F7D /* Build configuration list for PBXNativeTarget "FoldKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12F2E103B15F13ADBB268FB8 /* Debug */,
+				F0EBFCA0273409BA12E78E36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3F595F19BAC44FE33118A77D /* Build configuration list for PBXNativeTarget "FoldLightWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8873C7FF28B7F3B85426F01F /* Debug */,
+				18069AE044C1AE3F70057D1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5BE35AED406FF325F251A3C4 /* Build configuration list for PBXNativeTarget "FoldKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F22F33D6235884DD5E9A5547 /* Debug */,
+				AD88167FC7642C05BD7B87DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CC2A514A7DEEADD1FB416C0A /* Build configuration list for PBXNativeTarget "FoldLight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B239098F858A0248AA2DB351 /* Debug */,
+				539C47171B8538566521DBDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CCB84DBB55FD9CBC40413F69 /* Project object */;
+}
