@@ -1,0 +1,75 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FoldLight app icon — a lit blueprint bulb on graph paper">
+  <defs>
+    <radialGradient id="fl-ground" cx="46%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#182530"/>
+      <stop offset="100%" stop-color="#0B131B"/>
+    </radialGradient>
+    <radialGradient id="fl-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F5613C" stop-opacity="0.60"/>
+      <stop offset="55%" stop-color="#F5613C" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#F5613C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="fl-glass" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#FFCB8A" stop-opacity="0.30"/>
+      <stop offset="70%" stop-color="#F5613C" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#F5613C" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="fl-grid" width="85.333" height="85.333" patternUnits="userSpaceOnUse">
+      <path d="M85.333 0H0V85.333" fill="none" stroke="#82A9CE" stroke-opacity="0.10" stroke-width="1.4"/>
+    </pattern>
+  </defs>
+
+  <!-- Blueprint ground + graph paper -->
+  <rect width="1024" height="1024" fill="url(#fl-ground)"/>
+  <rect width="1024" height="1024" fill="url(#fl-grid)"/>
+
+  <!-- Warm halo of a lit bulb -->
+  <circle cx="512" cy="452" r="300" fill="url(#fl-glow)"/>
+
+  <!-- Construction rays (blueprint "light" spokes) -->
+  <g stroke="#F5613C" stroke-width="4" stroke-linecap="round" opacity="0.42" stroke-dasharray="2 26">
+    <path d="M512 452 L512 118"/>
+    <path d="M512 452 L818 300"/>
+    <path d="M512 452 L866 452"/>
+    <path d="M512 452 L818 604"/>
+    <path d="M512 452 L206 604"/>
+    <path d="M512 452 L158 452"/>
+    <path d="M512 452 L206 300"/>
+  </g>
+  <g fill="#F5613C" opacity="0.5">
+    <circle cx="512" cy="118" r="8"/>
+    <circle cx="818" cy="300" r="8"/>
+    <circle cx="866" cy="452" r="8"/>
+    <circle cx="818" cy="604" r="8"/>
+    <circle cx="206" cy="604" r="8"/>
+    <circle cx="158" cy="452" r="8"/>
+    <circle cx="206" cy="300" r="8"/>
+  </g>
+
+  <!-- Bulb -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- glass envelope: circle glass tapering into the neck -->
+    <path d="M512 250
+             C 620 250 706 336 706 444
+             C 706 520 664 566 636 606
+             C 618 632 610 654 608 678
+             L 416 678
+             C 414 654 406 632 388 606
+             C 360 566 318 520 318 444
+             C 318 336 404 250 512 250 Z"
+          fill="url(#fl-glass)" stroke="#F5613C" stroke-width="13"/>
+
+    <!-- filament -->
+    <path d="M456 470
+             L482 470 L494 420 L512 512 L530 420 L542 470 L568 470"
+          fill="none" stroke="#D9A521" stroke-width="11"/>
+    <path d="M470 678 L470 560 M554 678 L554 560" fill="none" stroke="#F5613C" stroke-width="9" opacity="0.85"/>
+
+    <!-- screw base -->
+    <path d="M416 700 L608 700 M420 742 L604 742 M430 784 L594 784" fill="none" stroke="#F5613C" stroke-width="13"/>
+    <path d="M446 820 L578 820 L556 862 L468 862 Z" fill="none" stroke="#F5613C" stroke-width="13"/>
+  </g>
+
+  <!-- lit core dot -->
+  <circle cx="512" cy="470" r="15" fill="#FFCB8A"/>
+</svg>
