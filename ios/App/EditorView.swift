@@ -211,7 +211,14 @@ struct EditorView: View {
 						.overlay(Circle().stroke(bp.ink.opacity(0.25), lineWidth: 0.5))
 					Text(preset.name).font(Typography.text(14)).foregroundStyle(bp.ink)
 					Spacer()
-					Button("Apply") { Task { await vm.apply(preset, to: light) } }
+					Button("Apply") {
+						// Mirror the preset into the editor's local controls so the bulb
+						// preview + sliders update immediately. Without this the preview
+						// (driven by @State) only re-syncs when the *selected light*
+						// changes, so applying a preset moved the real bulb but not the UI.
+						syncEditor(from: preset)
+						Task { await vm.apply(preset, to: light) }
+					}
 						.font(Typography.text(13, weight: .semibold)).tint(bp.crease)
 					Button(role: .destructive) {
 						presets = PresetStore.shared.remove(id: preset.id)
@@ -260,6 +267,19 @@ struct EditorView: View {
 		// it reads distinctly from the Color-mode editor shot (which all fits on one
 		// Pro Max screen), while still showing the preset library.
 		if ScreenshotSupport.isActive, ScreenshotSupport.screen == .presets, light.supportsColorTemp {
+			mode = .white
+		}
+	}
+
+	/// Mirror a preset into the editor's local controls (bulb preview + sliders read
+	/// this @State). Matches the shape of `syncFromLight()` / `saveCurrentAsPreset()`.
+	private func syncEditor(from preset: LightPreset) {
+		brightness = Double(preset.brightnessPct)
+		if let rgb = preset.rgb {
+			color = rgb.color
+			mode = .color
+		} else if let k = preset.kelvin {
+			kelvin = Double(k)
 			mode = .white
 		}
 	}

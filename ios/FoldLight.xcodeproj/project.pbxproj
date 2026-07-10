@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00F2C57F4AA99E97DBB91141 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AACCDEF448D4717F1AD77 /* SettingsView.swift */; };
+		01FA48A63DC2541CBFEFAFE8 /* LastLightStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5721B7C29447944B8654C /* LastLightStateTests.swift */; };
 		023A156B34AC96AF7E2EAD99 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3540911D7215515109E88B /* PanelView.swift */; };
 		06718387686C9548CE3E46DD /* LightWidgetConfigurationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C0BA4E89C47E936900C8C3 /* LightWidgetConfigurationIntent.swift */; };
 		06CB595EF82BECFA7B177B6D /* LightPrefsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */; };
@@ -29,6 +30,7 @@
 		3AE9D465E16FBEA32ECECB0B /* LightDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */; };
 		445CA533407665897A89452D /* IBMPlexMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E1A172A113276B57CA93306 /* IBMPlexMono-SemiBold.ttf */; };
 		48F6AF5D131F4273113FAD3B /* URLNormalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */; };
+		4A01422777F7A9275DBD2F1D /* LastLightStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E1FA75D6AB029B302A9AB /* LastLightStateStore.swift */; };
 		4C27A826D8CDF030CB38D566 /* BricolageGrotesque.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F656A40D877175605C0C6F6 /* BricolageGrotesque.ttf */; };
 		4D8E73D735BAC6B5470D70E7 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6681D0F28BB8732931A0DF /* KeychainStore.swift */; };
 		4FF40FEC8412BD1731F95437 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AA4DF2C37D37A28A157D0717 /* PrivacyInfo.xcprivacy */; };
@@ -194,6 +196,7 @@
 		AF1F3E2AB854B035A51BDD27 /* PresetAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAppEntity.swift; sourceTree = "<group>"; };
 		B3C220D56396E3D1A88108A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B3CD69F1148210A5743CA85C /* LightState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightState.swift; sourceTree = "<group>"; };
+		B9D5721B7C29447944B8654C /* LastLightStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastLightStateTests.swift; sourceTree = "<group>"; };
 		BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNormalizationTests.swift; sourceTree = "<group>"; };
 		C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTimelineProvider.swift; sourceTree = "<group>"; };
 		D4C233046B2954961897FD18 /* PresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetStore.swift; sourceTree = "<group>"; };
@@ -203,6 +206,7 @@
 		E875EC3EF51B335C775E6659 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightAppEntity.swift; sourceTree = "<group>"; };
 		ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessTests.swift; sourceTree = "<group>"; };
+		ED0E1FA75D6AB029B302A9AB /* LastLightStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastLightStateStore.swift; sourceTree = "<group>"; };
 		FB278B87C13606FCCE5338B8 /* state-yetstrhom-on.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "state-yetstrhom-on.json"; sourceTree = "<group>"; };
 		FB2D9D45CFC90B9A9827B4B9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FC5FB9C9F95736704E461A3B /* LightWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightWidget.swift; sourceTree = "<group>"; };
@@ -338,6 +342,7 @@
 			children = (
 				E875EC3EF51B335C775E6659 /* AppSettings.swift */,
 				7D6681D0F28BB8732931A0DF /* KeychainStore.swift */,
+				ED0E1FA75D6AB029B302A9AB /* LastLightStateStore.swift */,
 				2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */,
 				86CB689D370686090FA1C0FA /* LightPrefsStore.swift */,
 				D4C233046B2954961897FD18 /* PresetStore.swift */,
@@ -418,6 +423,7 @@
 			children = (
 				6C4DABAB149DF0D247135D3B /* Fixtures */,
 				ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */,
+				B9D5721B7C29447944B8654C /* LastLightStateTests.swift */,
 				31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */,
 				E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */,
 				89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */,
@@ -630,6 +636,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF564E780E17830E9F397BC8 /* BrightnessTests.swift in Sources */,
+				01FA48A63DC2541CBFEFAFE8 /* LastLightStateTests.swift in Sources */,
 				BC30BE60B81A0A1EC615C3E1 /* LauncherStoreTests.swift in Sources */,
 				3AE9D465E16FBEA32ECECB0B /* LightDecodingTests.swift in Sources */,
 				06CB595EF82BECFA7B177B6D /* LightPrefsTests.swift in Sources */,
@@ -666,6 +673,7 @@
 				2FF04B04BC8EBE7098EB5390 /* Fonts.swift in Sources */,
 				BD833E9C9B3B4A4C46E5BCC9 /* IntentDiagnostics.swift in Sources */,
 				4D8E73D735BAC6B5470D70E7 /* KeychainStore.swift in Sources */,
+				4A01422777F7A9275DBD2F1D /* LastLightStateStore.swift in Sources */,
 				1AEED598AB1C666F3EB01975 /* LauncherStore.swift in Sources */,
 				E9A7684C4349216EE64F07D2 /* LauncherTarget.swift in Sources */,
 				BFC3783C023C2011E22FF00F /* LightCache.swift in Sources */,

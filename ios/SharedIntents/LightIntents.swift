@@ -8,6 +8,8 @@ import FoldKit
 private func reconcile(_ entityID: String, provider: any LightProviding, expected: (inout LightState) -> Void) async {
 	if let fresh = try? await provider.light(entityID) {
 		LightCache.shared.upsert(fresh)
+		// Capture the on-state so turning the light back on restores it (app + widget share this).
+		LastLightStateStore.shared.record(fresh)
 	} else if var current = LightCache.shared.read().first(where: { $0.entityID == entityID }) {
 		expected(&current)
 		LightCache.shared.upsert(current)
@@ -28,8 +30,19 @@ public struct ToggleLightIntent: AppIntent {
 
 	public func perform() async throws -> some IntentResult {
 		let provider = StoredConnection.load().makeProvider()
+		// Decide on/off from the state the widget is already showing (the cache), so a
+		// turn-on restores the last-known color/brightness rather than snapping to full
+		// white. No extra network read, and the decision matches what the user sees.
+		let wasOn = LightCache.shared.read().first { $0.entityID == light.id }?.isOn ?? false
+		let last = wasOn ? nil : LastLightStateStore.shared.lastOn(light.id)
 		do {
-			try await provider.toggle(light.id)
+			if wasOn {
+				try await provider.turnOff(light.id)
+			} else if let last, last.hasValue {
+				try await provider.turnOn(light.id, brightnessPct: last.brightnessPct, rgb: last.rgb, kelvin: last.kelvin)
+			} else {
+				try await provider.toggle(light.id)   // nothing recorded yet → HA's own memory
+			}
 		} catch {
 			// HA unreachable — do NOT flip the cached state (that caused the
 			// "widget says on but bulb is off" inversion). Record why so the failure
@@ -39,7 +52,13 @@ public struct ToggleLightIntent: AppIntent {
 			return .result()
 		}
 		IntentDiagnostics.clear()
-		await reconcile(light.id, provider: provider) { $0.isOn.toggle() }
+		await reconcile(light.id, provider: provider) { l in
+			if wasOn { l.isOn = false; l.brightnessPct = nil }
+			else {
+				l.isOn = true
+				if let last { l.brightnessPct = last.brightnessPct; l.rgb = last.rgb; l.colorTempKelvin = last.kelvin }
+			}
+		}
 		return .result()
 	}
 }

@@ -39,6 +39,8 @@ final class LightsViewModel {
 			let fetched = try await provider.lights()
 			lights = fetched
 			LightCache.shared.write(fetched)
+			// Remember each on light's color/brightness so turning it back on restores it.
+			LastLightStateStore.shared.record(fetched)
 			WidgetReload.requestAll()
 			state = .loaded
 			lastError = nil
@@ -68,11 +70,27 @@ final class LightsViewModel {
 		await refresh()          // reconcile with HA's reported state
 	}
 
+	/// Toggle a light. Turning **on** restores its last-known color + brightness
+	/// (falling back to HA's own memory when nothing is recorded yet) rather than
+	/// snapping to full white.
 	func toggle(_ light: LightState) async {
-		await act(on: light.entityID, optimistic: { l in
-			l.isOn.toggle()
-			if !l.isOn { l.brightnessPct = nil } else if l.brightnessPct == nil { l.brightnessPct = 100 }
-		}) { try await provider.toggle(light.entityID) }
+		if light.isOn {
+			await act(on: light.entityID, optimistic: { l in
+				l.isOn = false
+				l.brightnessPct = nil
+			}) { try await provider.turnOff(light.entityID) }
+		} else {
+			let last = LastLightStateStore.shared.lastOn(light.entityID)
+			await act(on: light.entityID, optimistic: { l in
+				l.isOn = true
+				l.brightnessPct = last?.brightnessPct ?? l.brightnessPct ?? 100
+				if let rgb = last?.rgb { l.rgb = rgb; l.colorTempKelvin = nil }
+				else if let k = last?.kelvin { l.colorTempKelvin = k; l.rgb = nil }
+			}) {
+				try await provider.turnOn(light.entityID,
+				                          brightnessPct: last?.brightnessPct, rgb: last?.rgb, kelvin: last?.kelvin)
+			}
+		}
 	}
 
 	func setBrightness(_ pct: Int, on light: LightState) async {
