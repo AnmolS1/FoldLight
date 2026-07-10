@@ -7,6 +7,9 @@ struct FoldLightApp: App {
 
 	init() {
 		BlueprintFonts.registerAll()
+		// Deterministic, secret-free state for App Store screenshot capture (no-op
+		// unless launched with `--uitest-screenshots`).
+		ScreenshotSupport.seed(AppSettings.shared)
 	}
 
 	var body: some Scene {
@@ -14,7 +17,10 @@ struct FoldLightApp: App {
 			RootView(settings: settings)
 		}
 		#if os(macOS)
-		.defaultSize(width: 460, height: 720)
+		// A roomier window for App Store screenshot capture (still fits the ~1169pt
+		// screen height); the normal launch stays compact.
+		.defaultSize(width: ScreenshotSupport.isActive ? 680 : 460,
+		             height: ScreenshotSupport.isActive ? 1040 : 720)
 		#endif
 	}
 }

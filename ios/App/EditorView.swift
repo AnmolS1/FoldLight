@@ -37,34 +37,43 @@ struct EditorView: View {
 	}
 
 	var body: some View {
-		ScrollView {
-			VStack(spacing: 16) {
-				statusBanner
-				if vm.lights.isEmpty {
-					emptyState
-				} else {
-					picker
-					if let light {
-						preview(light)
-						if light.isOnOffOnly {
-							onOffControls(light)
-						} else {
-							controls(light)
-							presetLibrary(light)
+		ScrollViewReader { proxy in
+			ScrollView {
+				VStack(spacing: 16) {
+					statusBanner
+					if vm.lights.isEmpty {
+						emptyState
+					} else {
+						picker
+						if let light {
+							preview(light)
+							if light.isOnOffOnly {
+								onOffControls(light)
+							} else {
+								controls(light)
+								presetLibrary(light).id("presetsAnchor")
+							}
 						}
 					}
 				}
+				.padding(16)
 			}
-			.padding(16)
+			.task(id: light?.entityID) { syncFromLight() }
+			.onAppear { presets = PresetStore.shared.load() }
+			// Screenshot capture: `--screen presets` opens the editor scrolled to the
+			// preset library. Wait a beat for mock lights to load and lay out first.
+			.task {
+				guard ScreenshotSupport.isActive, ScreenshotSupport.screen == .presets else { return }
+				try? await Task.sleep(for: .milliseconds(900))
+				withAnimation { proxy.scrollTo("presetsAnchor", anchor: .top) }
+			}
 		}
-		.task(id: light?.entityID) { syncFromLight() }
-		.onAppear { presets = PresetStore.shared.load() }
 	}
 
 	// MARK: Status banner
 
 	@ViewBuilder private var statusBanner: some View {
-		if settings.useMockData {
+		if settings.useMockData && !ScreenshotSupport.isActive {
 			banner("Mock data — real lights aren't being controlled. Turn off \u{201C}Use mock data\u{201D} in Settings.", color: bp.sax)
 		} else if let err = vm.lastError {
 			banner("Can't reach Home Assistant: \(err)", color: bp.crane)
@@ -246,6 +255,12 @@ struct EditorView: View {
 		if let rgb = light.rgb { color = rgb.color; mode = .color }
 		else if light.supportsColorTemp { mode = .white }
 		else if light.supportsColor { mode = .color }
+		// Screenshot capture: the "presets" shot opens the same bulb in White mode so
+		// it reads distinctly from the Color-mode editor shot (which all fits on one
+		// Pro Max screen), while still showing the preset library.
+		if ScreenshotSupport.isActive, ScreenshotSupport.screen == .presets, light.supportsColorTemp {
+			mode = .white
+		}
 	}
 
 	/// Debounce rapid ColorPicker changes into one HA call (~350ms after the last).

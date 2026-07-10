@@ -1,16 +1,23 @@
 import SwiftUI
 import FoldKit
 
+/// The three host tabs. A stable identity (vs. positional selection) lets the
+/// screenshot launch-arg jump straight to a tab.
+enum RootTab: Hashable { case light, panel, settings }
+
 /// Minimal host UI: three tabs — Editor (dial colors + save presets), Panel (web
 /// launchers), and Settings. Deliberately not a dashboard; widgets are the star.
 struct RootView: View {
 	@Bindable var settings: AppSettings
 	@Environment(\.colorScheme) private var colorScheme
 	@State private var vm: LightsViewModel
+	@State private var selectedTab: RootTab
 
 	init(settings: AppSettings) {
 		self.settings = settings
 		_vm = State(initialValue: LightsViewModel(settings: settings))
+		// Screenshot capture selects the tab via `--screen`; normal launches open Light.
+		_selectedTab = State(initialValue: ScreenshotSupport.isActive ? ScreenshotSupport.screen.tab : .light)
 	}
 
 	private var bp: BlueprintColors { BlueprintColors.resolve(colorScheme) }
@@ -18,10 +25,10 @@ struct RootView: View {
 	@State private var showOnboarding = false
 
 	var body: some View {
-		TabView {
-			tab(EditorView(vm: vm, settings: settings), "Light", "lightbulb")
-			tab(PanelView(), "Panel", "square.grid.2x2")
-			tab(SettingsView(settings: settings), "Settings", "gearshape")
+		TabView(selection: $selectedTab) {
+			tab(EditorView(vm: vm, settings: settings), "Light", "lightbulb").tag(RootTab.light)
+			tab(PanelView(), "Panel", "square.grid.2x2").tag(RootTab.panel)
+			tab(SettingsView(settings: settings), "Settings", "gearshape").tag(RootTab.settings)
 		}
 		.tint(bp.sax)
 		.environment(\.blueprint, bp)

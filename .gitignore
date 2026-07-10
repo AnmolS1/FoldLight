@@ -4,9 +4,14 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 *.xcscmblueprint
+docs/
 
 # XcodeGen output (regenerate with `xcodegen generate`)
 ios/FoldLight.xcodeproj/
+
+# App Store listing screenshots — regenerate with scripts/screenshots/, upload via
+# App Store Connect. Not needed in the repo.
+fastlane/screenshots/
 
 # macOS
 .DS_Store
