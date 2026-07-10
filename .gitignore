@@ -11,7 +11,7 @@ ios/FoldLight.xcodeproj/
 
 # App Store listing screenshots — regenerate with scripts/screenshots/, upload via
 # App Store Connect. Not needed in the repo.
-fastlane/screenshots/
+fastlane/
 
 # macOS
 .DS_Store
