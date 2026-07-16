@@ -227,6 +227,11 @@ struct LightsManagerView: View {
 		Text(label.uppercased())
 			.font(Typography.mono(9, weight: .semibold))
 			.foregroundStyle(bp.crease)
+			// Keep the label on one line at its intrinsic width so the capsule text
+			// never wraps mid-glyph ("TEM/P") when the row is tight at large Dynamic
+			// Type; the flexible entity-id beside it absorbs the deficit by truncating.
+			.lineLimit(1)
+			.fixedSize()
 			.padding(.horizontal, 5)
 			.padding(.vertical, 1)
 			.background(bp.crease.opacity(0.12), in: Capsule())

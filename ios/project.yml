@@ -110,6 +110,20 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: dev.ponderance.foldlight.kittests
         GENERATE_INFOPLIST_FILE: YES
 
+  # ── UI tests: capture largest-Dynamic-Type screenshots for the a11y gate (iOS) ──
+  FoldLightUITests:
+    type: bundle.ui-testing
+    supportedDestinations: [iOS]
+    sources:
+      - path: FoldLightUITests
+    dependencies:
+      - target: FoldLight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.ponderance.foldlight.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: FoldLight
+
 schemes:
   FoldLight:
     build:
@@ -120,6 +134,7 @@ schemes:
     test:
       targets:
         - FoldKitTests
+        - FoldLightUITests
   FoldKit:
     build:
       targets:

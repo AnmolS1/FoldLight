@@ -16,6 +16,7 @@
 		09285006C3D7B4E04B1310CA /* PresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C233046B2954961897FD18 /* PresetStore.swift */; };
 		0A445391E5DDE4CDD24EE732 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E875EC3EF51B335C775E6659 /* AppSettings.swift */; };
 		0EFD541FF3A98CE17F87055A /* LightIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446300FF731E8E89D545EE8 /* LightIntents.swift */; };
+		10337EE2A1C2E62F14D8E547 /* AccessibilitySizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF049D14630F20CC4676089E /* AccessibilitySizeUITests.swift */; };
 		1AEED598AB1C666F3EB01975 /* LauncherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */; };
 		1D0B2D134CA0781086023AB3 /* LightTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */; };
 		2066122466D78BFB5D9B4044 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F36D929FACF37B20C8F5 /* OnboardingView.swift */; };
@@ -80,6 +81,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1497B1281E3B0745A417D608 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCB84DBB55FD9CBC40413F69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA7A8D1102992C144AD0DCD8;
+			remoteInfo = FoldLight;
+		};
 		2E24EBD012BF96F18AE3FBFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CCB84DBB55FD9CBC40413F69 /* Project object */;
@@ -186,6 +194,7 @@
 		877DAC6EB9BB499904222407 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPrefsTests.swift; sourceTree = "<group>"; };
 		8BE3ED17BC34C66A8BC7DF5B /* FoldLight.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FoldLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F5CC36A23A1586F4E90D1F2 /* FoldLightUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FoldLightUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9181CA8C55D8D26C42624F0E /* FoldKitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FoldKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		946F6FAC5C7920192E12680D /* LightProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightProviding.swift; sourceTree = "<group>"; };
 		9993BD66957443C84887B978 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -214,6 +223,7 @@
 		FB278B87C13606FCCE5338B8 /* state-yetstrhom-on.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "state-yetstrhom-on.json"; sourceTree = "<group>"; };
 		FB2D9D45CFC90B9A9827B4B9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FC5FB9C9F95736704E461A3B /* LightWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightWidget.swift; sourceTree = "<group>"; };
+		FF049D14630F20CC4676089E /* AccessibilitySizeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilitySizeUITests.swift; sourceTree = "<group>"; };
 		FF7B9C4F90EACECC1A62B384 /* WidgetReload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetReload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,6 +292,7 @@
 				B707175205EA8F212F25DB1D /* App */,
 				ABCBAEE5100A70996051569D /* FoldKit */,
 				FB5C15B3BFD32DEC20A365CD /* FoldKitTests */,
+				A5DC838F63257F49E0C4FF5A /* FoldLightUITests */,
 				254F6CC7B08E9B23465A4625 /* SharedIntents */,
 				73CE3C833243B684F9363C3E /* Widgets */,
 				E806D49215A6963C60DFB599 /* Products */,
@@ -373,6 +384,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A5DC838F63257F49E0C4FF5A /* FoldLightUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FF049D14630F20CC4676089E /* AccessibilitySizeUITests.swift */,
+			);
+			path = FoldLightUITests;
+			sourceTree = "<group>";
+		};
 		ABCBAEE5100A70996051569D /* FoldKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +445,7 @@
 				502A50B378B84D19104D33D7 /* FoldKit.framework */,
 				9181CA8C55D8D26C42624F0E /* FoldKitTests.xctest */,
 				8BE3ED17BC34C66A8BC7DF5B /* FoldLight.app */,
+				8F5CC36A23A1586F4E90D1F2 /* FoldLightUITests.xctest */,
 				DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */,
 			);
 			name = Products;
@@ -532,6 +552,24 @@
 			productReference = DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		F7F426DC4FB0E92D08E2F763 /* FoldLightUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3429700D3FF4E8BE13817096 /* Build configuration list for PBXNativeTarget "FoldLightUITests" */;
+			buildPhases = (
+				F789D7153A722030DDE9073C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				98340F3D840D5BBEC4EB7384 /* PBXTargetDependency */,
+			);
+			name = FoldLightUITests;
+			packageProductDependencies = (
+			);
+			productName = FoldLightUITests;
+			productReference = 8F5CC36A23A1586F4E90D1F2 /* FoldLightUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -557,6 +595,11 @@
 						DevelopmentTeam = G2KBQH7KWT;
 						ProvisioningStyle = Automatic;
 					};
+					F7F426DC4FB0E92D08E2F763 = {
+						DevelopmentTeam = G2KBQH7KWT;
+						ProvisioningStyle = Automatic;
+						TestTargetID = CA7A8D1102992C144AD0DCD8;
+					};
 				};
 			};
 			buildConfigurationList = 0FE1D5CFEC7222B568814C25 /* Build configuration list for PBXProject "FoldLight" */;
@@ -576,6 +619,7 @@
 				D2F24C9870F0FBE15480502B /* FoldKit */,
 				A78190C1F1F6F7089BAC248F /* FoldKitTests */,
 				CA7A8D1102992C144AD0DCD8 /* FoldLight */,
+				F7F426DC4FB0E92D08E2F763 /* FoldLightUITests */,
 				E5AA8F3D6A95A9E5847DB91E /* FoldLightWidgets */,
 			);
 		};
@@ -676,6 +720,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F789D7153A722030DDE9073C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10337EE2A1C2E62F14D8E547 /* AccessibilitySizeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA8AED119237FC97B1855F15 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -717,6 +769,11 @@
 			isa = PBXTargetDependency;
 			target = D2F24C9870F0FBE15480502B /* FoldKit */;
 			targetProxy = 80518B2C971B31D133B61E5D /* PBXContainerItemProxy */;
+		};
+		98340F3D840D5BBEC4EB7384 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA7A8D1102992C144AD0DCD8 /* FoldLight */;
+			targetProxy = 1497B1281E3B0745A417D608 /* PBXContainerItemProxy */;
 		};
 		C723144FC936BFCB414FA2F2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -904,6 +961,27 @@
 			};
 			name = Debug;
 		};
+		A74A5D073F33C7A3A5972B4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.uitests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FoldLight;
+			};
+			name = Release;
+		};
 		AD88167FC7642C05BD7B87DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1060,6 +1138,27 @@
 			};
 			name = Debug;
 		};
+		FF43141FC911D6A57038BFFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ponderance.foldlight.uitests;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FoldLight;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1077,6 +1176,15 @@
 			buildConfigurations = (
 				12F2E103B15F13ADBB268FB8 /* Debug */,
 				F0EBFCA0273409BA12E78E36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3429700D3FF4E8BE13817096 /* Build configuration list for PBXNativeTarget "FoldLightUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF43141FC911D6A57038BFFD /* Debug */,
+				A74A5D073F33C7A3A5972B4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
