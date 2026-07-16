@@ -36,6 +36,7 @@
 		4FF40FEC8412BD1731F95437 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AA4DF2C37D37A28A157D0717 /* PrivacyInfo.xcprivacy */; };
 		50505656380A8C8A1CE2985A /* LightsManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238624192771C51E0153A704 /* LightsManagerView.swift */; };
 		569CB06CFF1AC63A52BAA173 /* FoldLightWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		56A5D19CCFF1EA21E8FDDF6A /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5281133B045648B18BDC09E8 /* Accessibility.swift */; };
 		5D1BAF926B3FF3CFBFBF0A52 /* LaunchersManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793366696457FB8ED6F5A92D /* LaunchersManagerView.swift */; };
 		5D2E093DEB011A77450DF175 /* LightControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A2BE07247DE719C1809136 /* LightControls.swift */; };
 		6A3EA72ADB2BC70684F591E5 /* WidgetReload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7B9C4F90EACECC1A62B384 /* WidgetReload.swift */; };
@@ -46,6 +47,7 @@
 		780422AC34BE6388E240FE33 /* state-yetstrhom.json in Resources */ = {isa = PBXBuildFile; fileRef = 09A19F5A9531F97A9051495E /* state-yetstrhom.json */; };
 		7BF3D2C595D64C98E628B50E /* LightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21606E59C74F0D0A2D45D0B9 /* LightsViewModel.swift */; };
 		8076EAA5BCA4ACA98B2CDF14 /* LightProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946F6FAC5C7920192E12680D /* LightProviding.swift */; };
+		8526378B95FD0913BDE9B25F /* AccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9334DF7BAC9650728DAA028 /* AccessibilityTests.swift */; };
 		8C4442823AF9AE1CFCFEA05B /* FoldKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		964755F688798D236C74538B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A83968EC857151B23380E47 /* RootView.swift */; };
 		979B248C9E580FDAA0F3D581 /* LightAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */; };
@@ -168,6 +170,7 @@
 		4C9542D931E94FF59DBF18B6 /* BlueprintDecor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintDecor.swift; sourceTree = "<group>"; };
 		502A50B378B84D19104D33D7 /* FoldKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoldKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52365D14AE83DDDFF38668BC /* PresetAndCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAndCacheTests.swift; sourceTree = "<group>"; };
+		5281133B045648B18BDC09E8 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		653902FAACA0881BCA17573B /* BlueprintColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintColors.swift; sourceTree = "<group>"; };
 		664A501230F19A1A760FDFB5 /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
 		7048ECED6F9FE3590B6E7A6E /* LauncherTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTarget.swift; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 		E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightDecodingTests.swift; sourceTree = "<group>"; };
 		E7A37C842E6F574F0AF16A65 /* FoldLight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoldLight.entitlements; sourceTree = "<group>"; };
 		E875EC3EF51B335C775E6659 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		E9334DF7BAC9650728DAA028 /* AccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTests.swift; sourceTree = "<group>"; };
 		EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightAppEntity.swift; sourceTree = "<group>"; };
 		ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessTests.swift; sourceTree = "<group>"; };
 		ED0E1FA75D6AB029B302A9AB /* LastLightStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastLightStateStore.swift; sourceTree = "<group>"; };
@@ -337,6 +341,14 @@
 			path = Widgets;
 			sourceTree = "<group>";
 		};
+		7C8D63851EDD6C2124035B77 /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				5281133B045648B18BDC09E8 /* Accessibility.swift */,
+			);
+			path = Accessibility;
+			sourceTree = "<group>";
+		};
 		968A7A2A492FAACB8B4A5C06 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +376,7 @@
 		ABCBAEE5100A70996051569D /* FoldKit */ = {
 			isa = PBXGroup;
 			children = (
+				7C8D63851EDD6C2124035B77 /* Accessibility */,
 				48608BE7DDF13A142D35B01A /* Intents */,
 				A4DA5867CBF5183CE411D27C /* Model */,
 				2A19A63B958C3087D81B87C3 /* Net */,
@@ -422,6 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				6C4DABAB149DF0D247135D3B /* Fixtures */,
+				E9334DF7BAC9650728DAA028 /* AccessibilityTests.swift */,
 				ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */,
 				B9D5721B7C29447944B8654C /* LastLightStateTests.swift */,
 				31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */,
@@ -635,6 +649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8526378B95FD0913BDE9B25F /* AccessibilityTests.swift in Sources */,
 				EF564E780E17830E9F397BC8 /* BrightnessTests.swift in Sources */,
 				01FA48A63DC2541CBFEFAFE8 /* LastLightStateTests.swift in Sources */,
 				BC30BE60B81A0A1EC615C3E1 /* LauncherStoreTests.swift in Sources */,
@@ -665,6 +680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56A5D19CCFF1EA21E8FDDF6A /* Accessibility.swift in Sources */,
 				0A445391E5DDE4CDD24EE732 /* AppSettings.swift in Sources */,
 				D865624ED70974BE537EC0A3 /* BlueprintColors.swift in Sources */,
 				D958EEF0CC6EB7AAF113D061 /* BlueprintDecor.swift in Sources */,

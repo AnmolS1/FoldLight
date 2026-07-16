@@ -117,6 +117,7 @@ struct OnboardingView: View {
 				settings.useMockData = false
 				settings.hasCompletedOnboarding = true
 				testing = false
+				A11yAnnounce.post("Connected to Home Assistant")
 				dismiss()
 				return
 			case 401, 403:
@@ -128,6 +129,7 @@ struct OnboardingView: View {
 			}
 			testFailed = true
 			testing = false
+			A11yAnnounce.post("Could not connect. \(testResult ?? "")")
 		}
 	}
 }

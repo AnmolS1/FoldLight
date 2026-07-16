@@ -99,6 +99,8 @@ struct SettingsView: View {
 				testFailed = true
 			}
 			testing = false
+			// Announce the outcome for VoiceOver — the result line is easy to miss.
+			A11yAnnounce.post(testFailed ? "Could not reach Home Assistant" : "Connected to Home Assistant")
 		}
 	}
 }

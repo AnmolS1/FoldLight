@@ -54,6 +54,13 @@ struct LaunchersManagerView: View {
 					}
 					.buttonStyle(.plain)
 					.listRowBackground(bp.card)
+					.accessibilityElement(children: .ignore)
+					.accessibilityLabel("Edit \(target.name)")
+					.accessibilityValue(target.urlString)
+					.accessibilityHint("Double-tap to edit this launcher")
+					#if os(macOS)
+					.help("Edit \(target.name)")
+					#endif
 				}
 				.onDelete { offsets in
 					targets.remove(atOffsets: offsets)
@@ -135,10 +142,18 @@ private struct LauncherEditSheet: View {
 	let symbolChoices: [String]
 	let onSave: (LauncherTarget) -> Void
 	let onCancel: () -> Void
+	// Visible focus ring for keyboard nav over the plain icon buttons (macOS).
+	@FocusState private var focusedSymbol: String?
 
 	private var isValid: Bool {
 		!target.name.trimmingCharacters(in: .whitespaces).isEmpty && target.url != nil
 			&& !target.urlString.trimmingCharacters(in: .whitespaces).isEmpty
+	}
+
+	/// A spoken/tooltip name for an SF Symbol choice ("house fill" → "house").
+	private func symbolLabel(_ symbol: String) -> String {
+		let base = symbol.split(separator: ".").first.map(String.init) ?? symbol
+		return "\(base) icon"
 	}
 
 	var body: some View {
@@ -151,7 +166,7 @@ private struct LauncherEditSheet: View {
 				}
 
 				BlueprintFormSection("Icon") {
-					LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
+					LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 10) {
 						ForEach(symbolChoices, id: \.self) { symbol in
 							Button {
 								target.symbol = symbol
@@ -159,14 +174,22 @@ private struct LauncherEditSheet: View {
 								Image(systemName: symbol)
 									.font(.system(size: 16, weight: .semibold))
 									.foregroundStyle(target.symbol == symbol ? bp.graph : bp.crease)
-									.frame(width: 36, height: 36)
+									.frame(width: 44, height: 44)   // ≥44pt hit target
 									.background(
 										target.symbol == symbol ? bp.crease : bp.graph,
 										in: RoundedRectangle(cornerRadius: 8)
 									)
-									.overlay(RoundedRectangle(cornerRadius: 8).stroke(bp.creaseLine, lineWidth: 0.5))
+									.overlay(RoundedRectangle(cornerRadius: 8)
+										.strokeBorder(focusedSymbol == symbol ? bp.crease : bp.creaseLine,
+										              lineWidth: focusedSymbol == symbol ? 2.5 : 0.5))
 							}
 							.buttonStyle(.plain)
+							.focused($focusedSymbol, equals: symbol)
+							.accessibilityLabel(symbolLabel(symbol))
+							.accessibilityAddTraits(target.symbol == symbol ? [.isSelected, .isButton] : .isButton)
+							#if os(macOS)
+							.help(symbolLabel(symbol))
+							#endif
 						}
 					}
 				}
@@ -178,6 +201,7 @@ private struct LauncherEditSheet: View {
 					}
 					.buttonStyle(.bordered)
 					.tint(bp.ink60)
+					.keyboardShortcut(.cancelAction)   // Esc closes the sheet (macOS)
 					Button("Save") {
 						onSave(target)
 						dismiss()
@@ -185,6 +209,7 @@ private struct LauncherEditSheet: View {
 					.buttonStyle(.borderedProminent)
 					.tint(bp.crease)
 					.disabled(!isValid)
+					.keyboardShortcut(.defaultAction)   // Return saves (macOS)
 				}
 				.frame(maxWidth: .infinity, alignment: .trailing)
 			}

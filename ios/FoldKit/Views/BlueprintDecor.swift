@@ -54,6 +54,8 @@ public struct FoldedCorner: View {
 /// the in-app preview. Pure SF Symbols + a radial glow so it scales everywhere.
 public struct BulbMark: View {
 	@Environment(\.blueprint) private var bp
+	@Environment(\.accessibilityDifferentiateWithoutColor) private var diffWithoutColor
+	@Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 	/// The light's current color when on (nil → use the theme accent).
 	var color: Color?
 	var isOn: Bool
@@ -65,10 +67,21 @@ public struct BulbMark: View {
 		self.size = size
 	}
 
+	/// The glyph must differ in *shape*, not just glow/color, so
+	/// Differentiate-Without-Color users can read on vs off: filled bulb vs a
+	/// slashed bulb. (The default off glyph stays the plain outline to preserve
+	/// the blueprint look when the setting is off.)
+	private var symbol: String {
+		if isOn { return "lightbulb.fill" }
+		return diffWithoutColor ? "lightbulb.slash" : "lightbulb"
+	}
+
 	public var body: some View {
 		let tint = color ?? bp.sax
+		// Reduce-Transparency users get a solid glyph and no soft halo.
+		let showHalo = isOn && !reduceTransparency
 		ZStack {
-			if isOn {
+			if showHalo {
 				Circle()
 					.fill(
 						RadialGradient(
@@ -80,10 +93,10 @@ public struct BulbMark: View {
 					)
 					.frame(width: size * 1.9, height: size * 1.9)
 			}
-			Image(systemName: isOn ? "lightbulb.fill" : "lightbulb")
+			Image(systemName: symbol)
 				.font(.system(size: size, weight: .regular))
 				.foregroundStyle(isOn ? tint : bp.crease)
-				.shadow(color: isOn ? tint.opacity(0.8) : .clear, radius: isOn ? size * 0.22 : 0)
+				.shadow(color: showHalo ? tint.opacity(0.8) : .clear, radius: showHalo ? size * 0.22 : 0)
 		}
 		.frame(width: size * 1.9, height: size * 1.9)
 		.accessibilityLabel(isOn ? "Light on" : "Light off")

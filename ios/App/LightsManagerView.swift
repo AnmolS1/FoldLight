@@ -149,6 +149,13 @@ struct LightsManagerView: View {
 			}
 		}
 		.contentShape(Rectangle())
+		// One element per light: name + on/off + capabilities + main marker, so
+		// VoiceOver reads "Desk lamp, on, dim, temp, main light" as a unit instead
+		// of the status dot, chips, and entity id separately.
+		.accessibilityElement(children: .ignore)
+		.accessibilityLabel(prefs.displayName(for: light))
+		.accessibilityValue(rowA11yValue(light, isMain: isMain))
+		.accessibilityHint("Actions available")
 		.contextMenu {
 			Button {
 				var updated = prefs
@@ -165,6 +172,16 @@ struct LightsManagerView: View {
 				Label("Rename…", systemImage: "pencil")
 			}
 		}
+	}
+
+	/// Spoken value for a light row: state, capabilities, and main marker.
+	private func rowA11yValue(_ light: LightState, isMain: Bool) -> String {
+		var parts = [light.isOn ? "on" : "off"]
+		parts.append(light.isOnOffOnly ? "on/off only" : "dimmable")
+		if light.supportsColorTemp { parts.append("adjustable white") }
+		if light.supportsColor { parts.append("color") }
+		if isMain { parts.append("main light") }
+		return parts.joined(separator: ", ")
 	}
 
 	private func capabilityChip(_ label: String) -> some View {

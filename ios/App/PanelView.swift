@@ -8,6 +8,9 @@ struct PanelView: View {
 	@Environment(\.openURL) private var openURL
 
 	@State private var targets: [LauncherTarget] = []
+	// A visible focus ring for keyboard users: `.buttonStyle(.plain)` strips the
+	// system ring, so drive our own from focus state (mainly for macOS Tab nav).
+	@FocusState private var focusedTile: String?
 
 	var body: some View {
 		ScrollView {
@@ -22,6 +25,17 @@ struct PanelView: View {
 							LauncherTileLabel(target: target)
 						}
 						.buttonStyle(.plain)
+						.focused($focusedTile, equals: target.id)
+						.overlay(
+							RoundedRectangle(cornerRadius: 12)
+								.strokeBorder(bp.crease, lineWidth: focusedTile == target.id ? 2.5 : 0)
+						)
+						.accessibilityLabel(target.name)
+						.accessibilityValue("Opens \(target.urlString)")
+						.accessibilityHint("Double-tap to open in your browser")
+						#if os(macOS)
+						.help("Open \(target.name) — \(target.urlString)")
+						#endif
 					}
 				}
 			}
@@ -55,12 +69,15 @@ struct PanelView: View {
 /// The tile row shared by the in-app panel (and mirrored by the widget).
 struct LauncherTileLabel: View {
 	@Environment(\.blueprint) private var bp
+	// Icon scales with Dynamic Type / system text size rather than a fixed 20pt.
+	@ScaledMetric(relativeTo: .headline) private var iconSize: CGFloat = 20
+	@ScaledMetric(relativeTo: .body) private var trailingIcon: CGFloat = 16
 	let target: LauncherTarget
 
 	var body: some View {
 		HStack(spacing: 14) {
 			Image(systemName: target.symbol)
-				.font(.system(size: 20, weight: .semibold))
+				.font(.system(size: iconSize, weight: .semibold))
 				.foregroundStyle(bp.crease)
 				.frame(width: 32)
 			VStack(alignment: .leading, spacing: 2) {
@@ -75,7 +92,7 @@ struct LauncherTileLabel: View {
 			}
 			Spacer(minLength: 0)
 			Image(systemName: "arrow.up.right.square")
-				.font(.system(size: 16, weight: .semibold))
+				.font(.system(size: trailingIcon, weight: .semibold))
 				.foregroundStyle(bp.ink60)
 		}
 		.padding(14)

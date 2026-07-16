@@ -50,25 +50,33 @@ public enum BlueprintFonts {
 }
 
 /// Semantic type ramp for the blueprint theme.
+///
+/// Each face is sized in points **relative to a Dynamic Type text style** via
+/// `Font.custom(_:size:relativeTo:)`, so the custom faces scale with the user's
+/// preferred content size on iOS *and* the system text-size on macOS. The system
+/// fallbacks (used only if a face fails to register) are likewise style-relative.
 public enum Typography {
 	/// Display / headings — Bricolage Grotesque, else system default.
-	public static func display(_ size: CGFloat, weight: Font.Weight = .bold) -> Font {
-		if let ps = BlueprintFonts.name("display") { return .custom(ps, size: size).weight(weight) }
-		return .system(size: size, weight: weight)
+	public static func display(_ size: CGFloat, weight: Font.Weight = .bold,
+	                           relativeTo style: Font.TextStyle = .largeTitle) -> Font {
+		if let ps = BlueprintFonts.name("display") { return .custom(ps, size: size, relativeTo: style).weight(weight) }
+		return .system(style, design: .default).weight(weight)
 	}
 
 	/// Body / labels — Hanken Grotesk, else system default.
-	public static func text(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
-		if let ps = BlueprintFonts.name("text") { return .custom(ps, size: size).weight(weight) }
-		return .system(size: size, weight: weight)
+	public static func text(_ size: CGFloat, weight: Font.Weight = .regular,
+	                        relativeTo style: Font.TextStyle = .body) -> Font {
+		if let ps = BlueprintFonts.name("text") { return .custom(ps, size: size, relativeTo: style).weight(weight) }
+		return .system(style, design: .default).weight(weight)
 	}
 
 	/// Numeric / monospace — IBM Plex Mono, else system monospaced.
-	public static func mono(_ size: CGFloat, weight: Font.Weight = .semibold) -> Font {
+	public static func mono(_ size: CGFloat, weight: Font.Weight = .semibold,
+	                        relativeTo style: Font.TextStyle = .callout) -> Font {
 		let key = (weight == .regular || weight == .light) ? "mono" : "monoSemibold"
 		if let ps = BlueprintFonts.name(key) ?? BlueprintFonts.name("mono") {
-			return .custom(ps, size: size).weight(weight)
+			return .custom(ps, size: size, relativeTo: style).weight(weight)
 		}
-		return .system(size: size, weight: weight, design: .monospaced)
+		return .system(style, design: .monospaced).weight(weight)
 	}
 }

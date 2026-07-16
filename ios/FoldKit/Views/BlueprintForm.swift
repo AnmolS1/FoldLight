@@ -55,6 +55,7 @@ public struct BlueprintField: View {
 	public enum Kind { case plain, secure, mono, monoSecure }
 
 	@Environment(\.blueprint) private var bp
+	@ScaledMetric(relativeTo: .body) private var eyeSize: CGFloat = 14
 	private let label: String
 	@Binding private var text: String
 	private let kind: Kind
@@ -98,6 +99,10 @@ public struct BlueprintField: View {
 					.foregroundStyle(bp.ink)
 					.truncationMode(.middle)
 					.disableAutocorrection(true)
+					// The visible label sits above the field; tie it to the input so
+					// VoiceOver announces "Base URL, text field" rather than an
+					// unlabeled field.
+					.accessibilityLabel(label)
 					#if os(iOS)
 					.textInputAutocapitalization(.never)
 					.keyboardType(isURL ? .URL : .default)
@@ -107,13 +112,16 @@ public struct BlueprintField: View {
 						revealed.toggle()
 					} label: {
 						Image(systemName: revealed ? "eye.slash" : "eye")
-							.font(.system(size: 14, weight: .semibold))
+							.font(.system(size: eyeSize, weight: .semibold))
 							.foregroundStyle(bp.ink60)
-							.frame(width: 32, height: 32)
+							.frame(width: 44, height: 44)   // ≥44pt hit target
 							.contentShape(Rectangle())
 					}
 					.buttonStyle(.plain)
 					.accessibilityLabel(revealed ? "Hide value" : "Show value")
+					#if os(macOS)
+					.help(revealed ? "Hide value" : "Show value")
+					#endif
 				}
 			}
 			.padding(.horizontal, 12)
@@ -229,6 +237,8 @@ public struct BlueprintActionRow: View {
 /// A chevron row used as a `NavigationLink` label for manager screens.
 public struct BlueprintNavRow: View {
 	@Environment(\.blueprint) private var bp
+	@ScaledMetric(relativeTo: .body) private var iconSize: CGFloat = 16
+	@ScaledMetric(relativeTo: .caption) private var chevronSize: CGFloat = 12
 	private let title: String
 	private let subtitle: String?
 	private let systemImage: String?
@@ -243,7 +253,7 @@ public struct BlueprintNavRow: View {
 		HStack(spacing: 12) {
 			if let systemImage {
 				Image(systemName: systemImage)
-					.font(.system(size: 16, weight: .semibold))
+					.font(.system(size: iconSize, weight: .semibold))
 					.foregroundStyle(bp.crease)
 					.frame(width: 24)
 			}
@@ -260,7 +270,7 @@ public struct BlueprintNavRow: View {
 			}
 			Spacer(minLength: 0)
 			Image(systemName: "chevron.right")
-				.font(.system(size: 12, weight: .semibold))
+				.font(.system(size: chevronSize, weight: .semibold))
 				.foregroundStyle(bp.ink60)
 		}
 		.frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)

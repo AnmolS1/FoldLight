@@ -38,6 +38,13 @@ size); `BG=EEF0EC` for the Mac script if your Mac is in light appearance.
 The Mac script needs **Screen Recording** permission for your terminal
 (System Settings → Privacy & Security → Screen Recording).
 
+> **Testing the macOS widget?** These capture scripts launch the app straight from
+> its build dir, which is fine for screenshots but does *not* make the widget appear
+> in the macOS widget gallery — the gallery only surfaces a widget whose host app is
+> installed to a stable location. Use `scripts/run_mac.sh` instead: it builds, copies
+> the app to `/Applications`, refreshes `chronod`, and launches, so the FoldLight
+> widget shows up in Notification Center → Edit Widgets.
+
 ## ⚠️ macOS side effect
 
 The iPhone run is fully isolated (simulator container). The **Mac** run writes to the

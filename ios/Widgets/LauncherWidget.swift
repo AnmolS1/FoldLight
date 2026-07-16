@@ -27,10 +27,11 @@ struct LauncherWidget: Widget {
 /// entry view's `\.blueprint` override.
 struct SchemeResolvedGraphPaper: View {
 	@Environment(\.colorScheme) private var scheme
+	@Environment(\.colorSchemeContrast) private var contrast
 
 	var body: some View {
 		GraphPaperBackground()
-			.environment(\.blueprint, BlueprintColors.resolve(scheme))
+			.environment(\.blueprint, BlueprintColors.resolve(scheme, contrast: contrast))
 	}
 }
 
@@ -64,9 +65,10 @@ struct LauncherProvider: TimelineProvider {
 
 struct LauncherWidgetView: View {
 	@Environment(\.colorScheme) private var scheme
+	@Environment(\.colorSchemeContrast) private var contrast
 	let targets: [LauncherTarget]
 
-	private var bp: BlueprintColors { BlueprintColors.resolve(scheme) }
+	private var bp: BlueprintColors { BlueprintColors.resolve(scheme, contrast: contrast) }
 
 	var body: some View {
 		Group {
@@ -104,6 +106,8 @@ struct LauncherWidgetView: View {
 								.background(bp.card, in: RoundedRectangle(cornerRadius: 8))
 								.overlay(RoundedRectangle(cornerRadius: 8).stroke(bp.creaseLine, lineWidth: 0.5))
 							}
+							.accessibilityLabel(target.name)
+							.accessibilityHint("Opens \(target.name) in your browser")
 						}
 					}
 				}

@@ -11,6 +11,8 @@ import AppKit
 /// preset that then appears as a widget swatch.
 struct EditorView: View {
 	@Environment(\.blueprint) private var bp
+	@Environment(\.accessibilityReduceMotion) private var reduceMotion
+	@Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 	@Bindable var vm: LightsViewModel
 	@Bindable var settings: AppSettings
 
@@ -18,6 +20,12 @@ struct EditorView: View {
 	@State private var brightness: Double = 100
 	@State private var kelvin: Double = 3000
 	@State private var color: Color = .orange
+	// HSB decomposition of `color`, driving the net-new adjustable color rows so
+	// hue/saturation/brightness are reachable (and spoken) without the graphical
+	// ColorPicker. Kept in sync with `color` both ways.
+	@State private var hue: Double = 0.08
+	@State private var sat: Double = 0.7
+	@State private var bri: Double = 1.0
 	@State private var mode: ColorMode = .white
 	@State private var presetName = ""
 	@State private var presets: [LightPreset] = []
@@ -66,7 +74,8 @@ struct EditorView: View {
 			.task {
 				guard ScreenshotSupport.isActive, ScreenshotSupport.screen == .presets else { return }
 				try? await Task.sleep(for: .milliseconds(900))
-				withAnimation { proxy.scrollTo("presetsAnchor", anchor: .top) }
+				// Honor Reduce Motion: jump without the scroll animation.
+				withAnimation(reduceMotion ? nil : .default) { proxy.scrollTo("presetsAnchor", anchor: .top) }
 			}
 		}
 	}
@@ -116,7 +125,26 @@ struct EditorView: View {
 		}
 		.frame(maxWidth: .infinity)
 		.padding(.vertical, 8)
-		.background(bp.card.opacity(0.6), in: RoundedRectangle(cornerRadius: 12))
+		.background(bp.card.opacity(reduceTransparency ? 1 : 0.6), in: RoundedRectangle(cornerRadius: 12))
+		// One element that speaks the whole current state, ignoring the bulb's own
+		// "Light on" label and the mono status text.
+		.accessibilityElement(children: .ignore)
+		.accessibilityLabel(light.name)
+		.accessibilityValue(previewA11yValue(light))
+	}
+
+	/// Spoken state for the preview: "On, 60 percent, warm white" / "On, 60 percent,
+	/// crane orange" / "Off".
+	private func previewA11yValue(_ light: LightState) -> String {
+		guard light.isOn else { return "Off" }
+		var parts = ["On", A11yValue.brightness(Int(brightness))]
+		if light.isOnOffOnly { return parts.joined(separator: ", ") }
+		if mode == .color, light.supportsColor {
+			parts.append(A11yColorName.name(hue: hue, saturation: sat, brightness: bri))
+		} else if light.supportsColorTemp {
+			parts.append(A11yValue.warmthWord(Int(kelvin)))
+		}
+		return parts.joined(separator: ", ")
 	}
 
 	private func previewColor(_ light: LightState) -> Color? {
@@ -143,6 +171,11 @@ struct EditorView: View {
 		}
 		.tint(bp.sax)
 		.buttonStyle(.borderedProminent)
+		.accessibilityValue(light.isOn ? "On" : "Off")
+		.accessibilityHint("Double-tap to turn \(light.isOn ? "off" : "on")")
+		#if os(macOS)
+		.help(light.isOn ? "Turn \(light.name) off" : "Turn \(light.name) on")
+		#endif
 	}
 
 	private func controls(_ light: LightState) -> some View {
@@ -152,6 +185,11 @@ struct EditorView: View {
 				Spacer()
 				Toggle("", isOn: Binding(get: { light.isOn }, set: { _ in Task { await vm.toggle(light) } }))
 					.labelsHidden().tint(bp.sax)
+					.accessibilityLabel("Power")
+					.accessibilityValue(light.isOn ? "On" : "Off")
+					#if os(macOS)
+					.help(light.isOn ? "Turn \(light.name) off" : "Turn \(light.name) on")
+					#endif
 			}
 
 			if light.supportsBrightness {
@@ -178,16 +216,80 @@ struct EditorView: View {
 			if light.supportsColor && (mode == .color || !light.supportsColorTemp) {
 				ColorPicker("Color", selection: $color, supportsOpacity: false)
 					.font(Typography.text(14, weight: .semibold))
-					.onChange(of: color) { _, _ in debouncedColorApply(to: light) }
+					.onChange(of: color) { _, _ in loadHSB(from: color); debouncedColorApply(to: light) }
+					#if os(macOS)
+					.help("Pick a color for \(light.name)")
+					#endif
+				// Net-new: the same color reachable (and spoken) as three adjustable
+				// rows, each announcing the nearest named color as you swipe.
+				colorComponentRows(light)
 			}
 		}
 		.padding(14)
-		.background(bp.card.opacity(0.6), in: RoundedRectangle(cornerRadius: 12))
+		.background(bp.card.opacity(reduceTransparency ? 1 : 0.6), in: RoundedRectangle(cornerRadius: 12))
+	}
+
+	// MARK: Adjustable color (HSB) rows — net-new, non-graphical color control
+
+	@ViewBuilder private func colorComponentRows(_ light: LightState) -> some View {
+		let colorName = A11yColorName.name(hue: hue, saturation: sat, brightness: bri)
+		VStack(alignment: .leading, spacing: 10) {
+			hsbRow("Hue", value: $hue, spoken: colorName, light: light)
+			hsbRow("Saturation", value: $sat, spoken: "\(Int(sat * 100)) percent, \(colorName)", light: light)
+			hsbRow("Color brightness", value: $bri, spoken: "\(Int(bri * 100)) percent, \(colorName)", light: light)
+		}
+	}
+
+	/// One adjustable HSB row (value 0…1). VoiceOver swipes step it and speak the
+	/// nearest named color; releasing a drag applies to the bulb.
+	private func hsbRow(_ title: String, value: Binding<Double>, spoken: String, light: LightState) -> some View {
+		VStack(alignment: .leading, spacing: 4) {
+			HStack {
+				Text(title).font(Typography.text(13, weight: .semibold)).foregroundStyle(bp.ink)
+				Spacer()
+				Text(title == "Hue" ? A11yColorName.name(hue: hue, saturation: sat, brightness: bri)
+				                    : "\(Int(value.wrappedValue * 100))%")
+					.font(Typography.mono(11)).foregroundStyle(bp.ink60)
+			}
+			Slider(value: value, in: 0...1, onEditingChanged: { editing in
+				if !editing { syncColorFromHSB(); debouncedColorApply(to: light) }
+			}).tint(bp.crease)
+		}
+		.accessibilityElement(children: .ignore)
+		.accessibilityLabel(title)
+		.accessibilityValue(spoken)
+		.accessibilityAdjustableAction { direction in
+			let v = value.wrappedValue
+			switch direction {
+			case .increment: value.wrappedValue = min(1, v + 0.05)
+			case .decrement: value.wrappedValue = max(0, v - 0.05)
+			@unknown default: break
+			}
+			syncColorFromHSB()
+			debouncedColorApply(to: light)
+		}
+	}
+
+	/// Rebuild `color` from the HSB rows (source of truth while adjusting them).
+	private func syncColorFromHSB() {
+		color = Color(hue: hue, saturation: sat, brightness: bri)
+	}
+
+	/// Decompose a Color into the HSB rows. Preserves the current hue when the
+	/// color is (near-)gray, where hue is otherwise undefined.
+	private func loadHSB(from c: Color) {
+		let triple = rgb(from: c)
+		let (h, s, v) = A11yColorName.hsb(r: triple.r, g: triple.g, b: triple.b)
+		if s > 0.02 { hue = h }
+		sat = s
+		bri = v
 	}
 
 	private func labeledSlider(_ title: String, value: Binding<Double>, range: ClosedRange<Double>, unit: String,
 	                           onCommit: @escaping () -> Void) -> some View {
-		VStack(alignment: .leading, spacing: 4) {
+		// Step a VoiceOver adjust by ~5% of the range (whole Kelvin / percent).
+		let step = max(1, (range.upperBound - range.lowerBound) / 20).rounded()
+		return VStack(alignment: .leading, spacing: 4) {
 			HStack {
 				Text(title).font(Typography.text(14, weight: .semibold)).foregroundStyle(bp.ink)
 				Spacer()
@@ -196,6 +298,21 @@ struct EditorView: View {
 			Slider(value: value, in: range, onEditingChanged: { editing in
 				if !editing { onCommit() }   // fire once, on release
 			}).tint(bp.crease)
+		}
+		// Combine label + slider into one node with a spoken value, and make the
+		// whole node adjustable so a VoiceOver swipe steps it and speaks the result.
+		.accessibilityElement(children: .ignore)
+		.accessibilityLabel(title)
+		.accessibilityValue(unit == "K" ? A11yValue.temperature(Int(value.wrappedValue))
+		                                 : A11yValue.brightness(Int(value.wrappedValue)))
+		.accessibilityAdjustableAction { direction in
+			let v = value.wrappedValue
+			switch direction {
+			case .increment: value.wrappedValue = min(range.upperBound, v + step)
+			case .decrement: value.wrappedValue = max(range.lowerBound, v - step)
+			@unknown default: break
+			}
+			onCommit()
 		}
 	}
 
@@ -206,10 +323,22 @@ struct EditorView: View {
 			Text("Presets").font(Typography.text(14, weight: .semibold)).foregroundStyle(bp.ink)
 
 			ForEach(presets) { preset in
+				let active = isActivePreset(preset)
 				HStack(spacing: 10) {
-					Circle().fill(preset.swatch).frame(width: 22, height: 22)
-						.overlay(Circle().stroke(bp.ink.opacity(0.25), lineWidth: 0.5))
+					// Selected state is shown with a ring + checkmark, never tint alone.
+					ZStack {
+						Circle().fill(preset.swatch).frame(width: 22, height: 22)
+							.overlay(Circle().stroke(active ? bp.ink : bp.ink.opacity(0.25),
+							                         lineWidth: active ? 2 : 0.5))
+						if active {
+							Image(systemName: "checkmark")
+								.font(.system(size: 10, weight: .bold))
+								.foregroundStyle(bp.ink)
+						}
+					}
+					.accessibilityHidden(true)
 					Text(preset.name).font(Typography.text(14)).foregroundStyle(bp.ink)
+						.accessibilityHidden(true)
 					Spacer()
 					Button("Apply") {
 						// Mirror the preset into the editor's local controls so the bulb
@@ -220,11 +349,22 @@ struct EditorView: View {
 						Task { await vm.apply(preset, to: light) }
 					}
 						.font(Typography.text(13, weight: .semibold)).tint(bp.crease)
+						.accessibilityLabel("Apply \(preset.name)")
+						.accessibilityValue(presetSpoken(preset) + (active ? ", selected" : ""))
+						.accessibilityHint("Double-tap to apply this preset")
+						.accessibilityAddTraits(active ? .isSelected : [])
+						#if os(macOS)
+						.help("Apply \(preset.name): \(presetSpoken(preset))")
+						#endif
 					Button(role: .destructive) {
 						presets = PresetStore.shared.remove(id: preset.id)
 						WidgetReload.requestAll()
 					} label: { Image(systemName: "trash") }
 						.tint(bp.crane)
+						.accessibilityLabel("Delete \(preset.name)")
+						#if os(macOS)
+						.help("Delete \(preset.name)")
+						#endif
 				}
 			}
 
@@ -235,10 +375,11 @@ struct EditorView: View {
 					.font(Typography.text(13, weight: .semibold))
 					.tint(bp.sax)
 					.disabled(presetName.trimmingCharacters(in: .whitespaces).isEmpty)
+					.accessibilityHint("Saves the current color and brightness as a preset")
 			}
 		}
 		.padding(14)
-		.background(bp.card.opacity(0.6), in: RoundedRectangle(cornerRadius: 12))
+		.background(bp.card.opacity(reduceTransparency ? 1 : 0.6), in: RoundedRectangle(cornerRadius: 12))
 	}
 
 	private var emptyState: some View {
@@ -260,7 +401,7 @@ struct EditorView: View {
 		brightness = Double(light.brightnessPct ?? 100)
 		if let k = light.colorTempKelvin { kelvin = Double(k) }
 		else { kelvin = Double(light.minKelvin ?? 2700) }
-		if let rgb = light.rgb { color = rgb.color; mode = .color }
+		if let rgb = light.rgb { color = rgb.color; loadHSB(from: color); mode = .color }
 		else if light.supportsColorTemp { mode = .white }
 		else if light.supportsColor { mode = .color }
 		// Screenshot capture: the "presets" shot opens the same bulb in White mode so
@@ -277,6 +418,7 @@ struct EditorView: View {
 		brightness = Double(preset.brightnessPct)
 		if let rgb = preset.rgb {
 			color = rgb.color
+			loadHSB(from: color)
 			mode = .color
 		} else if let k = preset.kelvin {
 			kelvin = Double(k)
@@ -317,6 +459,25 @@ struct EditorView: View {
 		presets = PresetStore.shared.add(preset)
 		presetName = ""
 		WidgetReload.requestAll()
+	}
+
+	/// Whether a preset matches the editor's current dialed-in state (drives the
+	/// selected ring + checkmark and the VoiceOver "selected" trait).
+	private func isActivePreset(_ p: LightPreset) -> Bool {
+		guard Int(brightness) == p.brightnessPct else { return false }
+		if let k = p.kelvin { return mode == .white && Int(kelvin) == k }
+		if let rgb = p.rgb { return mode == .color && rgb == self.rgb(from: color) }
+		return false
+	}
+
+	/// Spoken description of a preset's color + brightness, e.g. "crane orange, 60
+	/// percent" or "warm white, 100 percent".
+	private func presetSpoken(_ p: LightPreset) -> String {
+		var parts: [String] = []
+		if let rgb = p.rgb { parts.append(A11yColorName.name(r: rgb.r, g: rgb.g, b: rgb.b)) }
+		else if let k = p.kelvin { parts.append(A11yValue.warmthWord(k)) }
+		parts.append(A11yValue.brightness(p.brightnessPct))
+		return parts.joined(separator: ", ")
 	}
 
 	/// Cross-platform Color → sRGB triple.

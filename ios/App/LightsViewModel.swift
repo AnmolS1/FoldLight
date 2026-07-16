@@ -1,6 +1,9 @@
 import SwiftUI
 import Observation
 import FoldKit
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Drives the in-app editor: loads lights from the current provider (mock or live),
 /// keeps the App-Group cache fresh for widgets, and sends control actions to HA.
@@ -74,6 +77,10 @@ final class LightsViewModel {
 	/// (falling back to HA's own memory when nothing is recorded yet) rather than
 	/// snapping to full white.
 	func toggle(_ light: LightState) async {
+		// Non-visual confirmation the moment the user commits (before the network
+		// round-trip): a haptic tap plus a spoken state change.
+		hapticTap()
+		announce("\(light.name) \(light.isOn ? "off" : "on")")
 		if light.isOn {
 			await act(on: light.entityID, optimistic: { l in
 				l.isOn = false
@@ -114,8 +121,21 @@ final class LightsViewModel {
 	}
 
 	func apply(_ preset: LightPreset, to light: LightState) async {
+		announce("\(preset.name) applied to \(light.name)")
 		await act(on: light.entityID, optimistic: { l in
 			l.isOn = true; l.brightnessPct = preset.brightnessPct; l.rgb = preset.rgb; l.colorTempKelvin = preset.kelvin
 		}) { try await provider.apply(preset, to: light.entityID) }
+	}
+
+	// MARK: Non-visual feedback
+
+	/// Post a VoiceOver announcement of an action's result ("Desk lamp off").
+	private func announce(_ message: String) { A11yAnnounce.post(message) }
+
+	/// A light selection haptic on iOS; no-op elsewhere.
+	private func hapticTap() {
+		#if canImport(UIKit) && os(iOS)
+		UISelectionFeedbackGenerator().selectionChanged()
+		#endif
 	}
 }

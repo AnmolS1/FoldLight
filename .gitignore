@@ -4,7 +4,11 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 *.xcscmblueprint
-docs/
+# Ignore generated docs, but keep the checked-in accessibility contrast reference.
+# (A bare `!docs/ACCESSIBILITY_CONTRAST.md` can't re-include a file whose parent
+# dir is excluded, so the directory itself must be listed as `docs/*`.)
+docs/*
+!docs/ACCESSIBILITY_CONTRAST.md
 
 # XcodeGen output (regenerate with `xcodegen generate`)
 ios/FoldLight.xcodeproj/

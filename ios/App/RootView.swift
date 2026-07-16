@@ -39,6 +39,7 @@ extension View {
 struct RootView: View {
 	@Bindable var settings: AppSettings
 	@Environment(\.colorScheme) private var colorScheme
+	@Environment(\.colorSchemeContrast) private var contrast
 	@State private var vm: LightsViewModel
 	@State private var selectedTab: RootTab
 
@@ -49,7 +50,7 @@ struct RootView: View {
 		_selectedTab = State(initialValue: ScreenshotSupport.isActive ? ScreenshotSupport.screen.tab : .light)
 	}
 
-	private var bp: BlueprintColors { BlueprintColors.resolve(colorScheme) }
+	private var bp: BlueprintColors { BlueprintColors.resolve(colorScheme, contrast: contrast) }
 
 	@State private var showOnboarding = false
 

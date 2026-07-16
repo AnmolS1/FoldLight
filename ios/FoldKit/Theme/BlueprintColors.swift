@@ -50,12 +50,28 @@ public struct BlueprintColors: Sendable, Equatable {
 		crease: Color(hex: "#2E5E8C"),
 		creaseLine: Color(hex: "#2E5E8C", alpha: 0.20),
 		crane: Color(hex: "#E84A27"),
-		sax: Color(hex: "#B8860B"),
+		// Darkened from #B8860B so the gold accent clears the 3:1 non-text contrast
+		// threshold on the light graph ground (#EEF0EC) — see docs/ACCESSIBILITY_CONTRAST.md.
+		sax: Color(hex: "#A67A0A"),
 		up: Color(hex: "#3E8E5E")
 	)
 
 	public static func resolve(_ scheme: ColorScheme) -> BlueprintColors {
 		scheme == .light ? .light : .dark
+	}
+
+	/// Contrast-aware palette. Under the system **Increase Contrast** setting,
+	/// secondary ink and hairlines are strengthened. The *standard*-contrast
+	/// `ink60` alpha stays 0.66 (the locked WCAG-AA fix); increased contrast only
+	/// raises it further, never below.
+	public static func resolve(_ scheme: ColorScheme, contrast: ColorSchemeContrast) -> BlueprintColors {
+		var c = resolve(scheme)
+		guard contrast == .increased else { return c }
+		let inkHex = scheme == .light ? "#1B2A33" : "#E9ECE7"
+		let creaseHex = scheme == .light ? "#2E5E8C" : "#82A9CE"
+		c.ink60 = Color(hex: inkHex, alpha: 0.82)
+		c.creaseLine = Color(hex: creaseHex, alpha: 0.5)
+		return c
 	}
 }
 
