@@ -45,6 +45,20 @@ Thresholds: normal text **4.5:1** (AA); large/semibold text and non-text UI
 | up (green accent) | graph | icon/large only | 3.50:1 | PASS |
 | up (green accent) | card | icon/large only | 4.01:1 | PASS |
 
+## Informative text on tinted / accent grounds
+
+Small text that carries meaning must clear **4.5:1**, so `sax`/`crane` are used
+only for *icons and large accents* — never as a small text fill. The two places
+that previously broke this now render the **text** in `ink` (keeping the accent
+for the tint/icon). Both are composited over the ground they actually sit on.
+
+| Element | Text | Over | Theme | Ratio | Result |
+|---|---|---|---|---|---|
+| MAIN badge (`LightsManagerView`) | ink | sax @0.14 capsule over card | dark | 10.20:1 | PASS |
+| MAIN badge (`LightsManagerView`) | ink | sax @0.14 capsule over card | light | 12.54:1 | PASS |
+| Editor load-failure message (`EditorView`) | ink | graph | dark | 13.90:1 | PASS |
+| Editor load-failure message (`EditorView`) | ink | graph | light | 12.84:1 | PASS |
+
 ## Notes / fixes
 
 - **`ink60` alpha stays 0.66.** This is the intentional WCAG-AA fix (spec called
@@ -53,11 +67,15 @@ Thresholds: normal text **4.5:1** (AA); large/semibold text and non-text UI
 - **Light `sax` darkened `#B8860B` → `#A67A0A`.** The original gold measured
   2.84:1 on the light graph ground — below the 3:1 non-text threshold for the
   accent's use as an icon/control-state color (toggles, the on-bulb tint, the
-  MAIN badge). The minimal darkening lands at 3.38:1 (graph) / 3.88:1 (card) and
-  stays recognizably gold. Dark `sax` is unchanged.
-- **`crane` as text.** `crane` is only ever used as an icon/large-accent color or
-  paired with `ink` body text for error rows (see `BlueprintActionRow`), never as
-  small body text, so its ~3.4:1 light-theme ratio is within policy.
+  Lights-list on/off status fill). The minimal darkening lands at 3.38:1 (graph) /
+  3.88:1 (card) and stays recognizably gold. Dark `sax` is unchanged. The `sax`
+  ratios above are for its **icon/control-state** role only (3:1); it is never a
+  small-text fill — the MAIN badge *label* is `ink` (see the table above), with
+  `sax` supplying only the capsule tint.
+- **`crane` is icon/large-accent only.** It backs error icons (e.g.
+  `BlueprintActionRow`'s triangle) and is paired with `ink` body text for error
+  rows, never as small body text. The editor's load-failure message — formerly
+  12pt `crane` (~3.4:1, failing) — is now `ink` on graph (see the table above).
 - **Increase Contrast.** Under the system setting,
   `BlueprintColors.resolve(_:contrast:)` raises `ink60` to 0.82 alpha and
   strengthens `creaseLine`, pushing every row further above threshold; the

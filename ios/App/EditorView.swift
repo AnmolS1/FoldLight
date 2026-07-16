@@ -388,7 +388,9 @@ struct EditorView: View {
 			Text(vm.state == .loading ? "Loading lights…" : "No lights found")
 				.font(Typography.text(14)).foregroundStyle(bp.ink60)
 			if case .failed(let msg) = vm.state {
-				Text(msg).font(Typography.text(12)).foregroundStyle(bp.crane).multilineTextAlignment(.center)
+				// Message in `ink` (not `crane`) so 12pt text clears WCAG AA; the off
+				// bulb above already signals the error state without relying on color.
+				Text(msg).font(Typography.text(12)).foregroundStyle(bp.ink).multilineTextAlignment(.center)
 			}
 		}
 		.padding(.top, 40)

@@ -118,60 +118,99 @@ struct LightsManagerView: View {
 
 	private func row(_ light: LightState) -> some View {
 		let isMain = effectiveMainID == light.entityID
-		return VStack(alignment: .leading, spacing: 3) {
-			HStack(spacing: 6) {
-				Circle()
-					.fill(light.isOn ? bp.sax : bp.ink60.opacity(0.4))
-					.frame(width: 7, height: 7)
-				Text(prefs.displayName(for: light))
-					.font(Typography.text(15, weight: .semibold))
-					.foregroundStyle(bp.ink)
-					.lineLimit(1)
-				if isMain {
-					Text("MAIN")
-						.font(Typography.mono(9, weight: .semibold))
-						.foregroundStyle(bp.sax)
-						.padding(.horizontal, 5)
-						.padding(.vertical, 1)
-						.background(bp.sax.opacity(0.14), in: Capsule())
+		return HStack(spacing: 8) {
+			VStack(alignment: .leading, spacing: 3) {
+				HStack(spacing: 6) {
+					// On vs off differ by *shape* (filled disc vs hollow ring), not tint
+					// alone, so the state reads without color perception.
+					Group {
+						if light.isOn {
+							Circle().fill(bp.sax)
+						} else {
+							Circle().strokeBorder(bp.ink60.opacity(0.55), lineWidth: 1.5)
+						}
+					}
+					.frame(width: 8, height: 8)
+					Text(prefs.displayName(for: light))
+						.font(Typography.text(15, weight: .semibold))
+						.foregroundStyle(bp.ink)
+						.lineLimit(1)
+					if isMain {
+						// Text in `ink` (not `sax`) so the small badge label clears WCAG AA
+						// on the sax-tinted capsule; the tint still reads as the accent.
+						Text("MAIN")
+							.font(Typography.mono(9, weight: .semibold))
+							.foregroundStyle(bp.ink)
+							.padding(.horizontal, 5)
+							.padding(.vertical, 1)
+							.background(bp.sax.opacity(0.14), in: Capsule())
+					}
+					Spacer(minLength: 0)
 				}
-				Spacer(minLength: 0)
+				HStack(spacing: 5) {
+					capabilityChip(light.isOnOffOnly ? "on/off" : "dim")
+					if light.supportsColorTemp { capabilityChip("temp") }
+					if light.supportsColor { capabilityChip("color") }
+					Text(light.entityID)
+						.font(Typography.mono(10))
+						.foregroundStyle(bp.ink60)
+						.lineLimit(1)
+						.truncationMode(.middle)
+				}
 			}
-			HStack(spacing: 5) {
-				capabilityChip(light.isOnOffOnly ? "on/off" : "dim")
-				if light.supportsColorTemp { capabilityChip("temp") }
-				if light.supportsColor { capabilityChip("color") }
-				Text(light.entityID)
-					.font(Typography.mono(10))
-					.foregroundStyle(bp.ink60)
-					.lineLimit(1)
-					.truncationMode(.middle)
-			}
+			.frame(maxWidth: .infinity, alignment: .leading)
+			.contentShape(Rectangle())
+			// One element per light: name + on/off + capabilities + main marker, so
+			// VoiceOver reads "Desk lamp, on, dim, temp, main light" as a unit instead
+			// of the status dot, chips, and entity id separately.
+			.accessibilityElement(children: .ignore)
+			.accessibilityLabel(prefs.displayName(for: light))
+			.accessibilityValue(rowA11yValue(light, isMain: isMain))
+
+			// A visible, labeled affordance for the row's actions so Make Main Light /
+			// Rename are reachable without the (Voice Control-hostile) long-press menu.
+			rowMenu(light, isMain: isMain)
 		}
-		.contentShape(Rectangle())
-		// One element per light: name + on/off + capabilities + main marker, so
-		// VoiceOver reads "Desk lamp, on, dim, temp, main light" as a unit instead
-		// of the status dot, chips, and entity id separately.
-		.accessibilityElement(children: .ignore)
-		.accessibilityLabel(prefs.displayName(for: light))
-		.accessibilityValue(rowA11yValue(light, isMain: isMain))
-		.accessibilityHint("Actions available")
-		.contextMenu {
-			Button {
-				var updated = prefs
-				updated.mainLightID = light.entityID
-				apply(updated)
-			} label: {
-				Label(isMain ? "Main light ✓" : "Make main light", systemImage: "star")
-			}
-			.disabled(isMain)
-			Button {
-				renameText = prefs.displayName(for: light)
-				renameTarget = light
-			} label: {
-				Label("Rename…", systemImage: "pencil")
-			}
+		.contextMenu { lightActions(light, isMain: isMain) }
+	}
+
+	/// The per-light actions, shared by the visible menu button and the long-press
+	/// context menu.
+	@ViewBuilder private func lightActions(_ light: LightState, isMain: Bool) -> some View {
+		Button {
+			var updated = prefs
+			updated.mainLightID = light.entityID
+			apply(updated)
+		} label: {
+			Label(isMain ? "Main light ✓" : "Make main light", systemImage: "star")
 		}
+		.disabled(isMain)
+		Button {
+			renameText = prefs.displayName(for: light)
+			renameTarget = light
+		} label: {
+			Label("Rename…", systemImage: "pencil")
+		}
+	}
+
+	/// Trailing "more options" menu — the discoverable, Voice Control-addressable
+	/// path to Make Main Light / Rename (the context menu stays as a shortcut). On
+	/// macOS this is a click-to-open button; right-click still opens the context menu.
+	private func rowMenu(_ light: LightState, isMain: Bool) -> some View {
+		Menu {
+			lightActions(light, isMain: isMain)
+		} label: {
+			Image(systemName: "ellipsis.circle")
+				.font(.system(size: 18, weight: .semibold))
+				.foregroundStyle(bp.crease)
+				.frame(width: 44, height: 44)   // ≥44pt hit target
+				.contentShape(Rectangle())
+		}
+		.menuIndicator(.hidden)
+		.accessibilityLabel("More options for \(prefs.displayName(for: light))")
+		#if os(macOS)
+		.help("More options for \(prefs.displayName(for: light))")
+		#endif
 	}
 
 	/// Spoken value for a light row: state, capabilities, and main marker.
