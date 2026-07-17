@@ -11,8 +11,9 @@ options:
 settings:
   base:
     MARKETING_VERSION: "0.2.0"
-    # Build number = git commit count at release time (monotonic). Bump before each
-    # archive. Must exceed this app's last App Store Connect upload.
+    # Fallback build number. The per-target postBuildScripts below OVERRIDE this at
+    # build/archive time with the git commit count (auto-increment). This literal is
+    # only used if git is unavailable; keep it ≥ the last App Store Connect upload.
     CURRENT_PROJECT_VERSION: "24"
     SWIFT_VERSION: "6.0"
     CODE_SIGN_STYLE: Automatic
@@ -47,6 +48,19 @@ targets:
     dependencies:
       - target: FoldKit
       - target: FoldLightWidgets
+    postBuildScripts:
+      - name: Set build number from git commit count
+        basedOnDependencyAnalysis: false
+        script: |
+          # Auto build number at build/archive time: git commit count (monotonic),
+          # floored so it never regresses. Degrades safely — if git or the plist is
+          # unavailable it leaves $(CURRENT_PROJECT_VERSION) from project.yml intact.
+          n=$(git -C "$PROJECT_DIR" rev-list --count HEAD 2>/dev/null || echo 0)
+          [ "$n" -lt 24 ] && n=24
+          plist="$TARGET_BUILD_DIR/$INFOPLIST_PATH"
+          if [ -f "$plist" ]; then
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $n" "$plist" && echo "build number -> $n"
+          fi
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.ponderance.foldlight
@@ -77,6 +91,19 @@ targets:
       - path: SharedIntents
     dependencies:
       - target: FoldKit
+    postBuildScripts:
+      - name: Set build number from git commit count
+        basedOnDependencyAnalysis: false
+        script: |
+          # Auto build number at build/archive time: git commit count (monotonic),
+          # floored so it never regresses. Degrades safely — if git or the plist is
+          # unavailable it leaves $(CURRENT_PROJECT_VERSION) from project.yml intact.
+          n=$(git -C "$PROJECT_DIR" rev-list --count HEAD 2>/dev/null || echo 0)
+          [ "$n" -lt 24 ] && n=24
+          plist="$TARGET_BUILD_DIR/$INFOPLIST_PATH"
+          if [ -f "$plist" ]; then
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $n" "$plist" && echo "build number -> $n"
+          fi
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.ponderance.foldlight.widgets

@@ -500,6 +500,7 @@
 				BA4C2414B1EE08F1282E6FB7 /* Frameworks */,
 				BC45D37FA5E41C18D9A9C6B5 /* Embed Foundation Extensions */,
 				2C4300ADCB51451EF804C914 /* Embed Frameworks */,
+				0567DD659A494BE943443C3C /* Set build number from git commit count */,
 			);
 			buildRules = (
 			);
@@ -539,6 +540,7 @@
 				E607D66F7452B1356C8A9A12 /* Sources */,
 				75EE33EAF8A27F64483E66E1 /* Resources */,
 				1000AD4DC0E27DE8D7803038 /* Frameworks */,
+				B518BCFFC98E0B41BBBBA99B /* Set build number from git commit count */,
 			);
 			buildRules = (
 			);
@@ -666,6 +668,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0567DD659A494BE943443C3C /* Set build number from git commit count */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set build number from git commit count";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Auto build number at build/archive time: git commit count (monotonic),\n# floored so it never regresses. Degrades safely — if git or the plist is\n# unavailable it leaves $(CURRENT_PROJECT_VERSION) from project.yml intact.\nn=$(git -C \"$PROJECT_DIR\" rev-list --count HEAD 2>/dev/null || echo 0)\n[ \"$n\" -lt 24 ] && n=24\nplist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nif [ -f \"$plist\" ]; then\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $n\" \"$plist\" && echo \"build number -> $n\"\nfi\n";
+		};
+		B518BCFFC98E0B41BBBBA99B /* Set build number from git commit count */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set build number from git commit count";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Auto build number at build/archive time: git commit count (monotonic),\n# floored so it never regresses. Degrades safely — if git or the plist is\n# unavailable it leaves $(CURRENT_PROJECT_VERSION) from project.yml intact.\nn=$(git -C \"$PROJECT_DIR\" rev-list --count HEAD 2>/dev/null || echo 0)\n[ \"$n\" -lt 24 ] && n=24\nplist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nif [ -f \"$plist\" ]; then\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $n\" \"$plist\" && echo \"build number -> $n\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		37B255FFEA6F216064971D4D /* Sources */ = {
