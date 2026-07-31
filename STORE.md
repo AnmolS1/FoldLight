@@ -12,7 +12,7 @@ own Home Assistant server.
 | Category | Utilities |
 | Description | TODO — cover: widget-first control of Home Assistant lights; auto-detects every light and its capabilities (on/off, dimming, temperature, color); per-widget light + preset-swatch configuration; Control Center controls; presets; user-defined launcher tiles; demo mode needs no server. |
 | Keywords (100 chars) | home assistant,lights,smart home,widget,dimmer,color,presets,control center |
-| Support URL | TODO (e.g. the GitHub repo) |
+| Support URL | `https://ponderance.dev/support/foldlight/` — **not the GitHub repo.** Keep the trailing slash: the bare path 307s. Set this on **both** the iOS and macOS versions; they are separate localizations on the same app. |
 | Marketing URL | optional |
 | Privacy-policy URL | **TODO — required.** Must state: no data collected; the app talks only to the user's own Home Assistant; the access token stays in the device Keychain. |
 
