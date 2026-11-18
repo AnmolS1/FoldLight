@@ -15,19 +15,22 @@ public struct LightOnState: Codable, Sendable, Equatable {
 		self.kelvin = kelvin
 	}
 
-	/// The on-state worth remembering from a light that is currently on. Prefers an
-	/// explicit RGB color; otherwise the white color temperature — a light is in one
-	/// mode or the other, and sending both to `turn_on` is ambiguous. Returns nil for
-	/// a light that is off (so the previous on-state survives being turned off).
+	/// The on-state worth remembering from a light that is currently on: brightness
+	/// plus EITHER the white temperature or the color (sending both to `turn_on` is
+	/// ambiguous). Home Assistant reports `rgb_color` in every color mode, including
+	/// white, where it is derived from the temperature. `color_temp_kelvin`, though,
+	/// is set only in white mode, so its presence is what marks a white light.
+	/// Returns nil for a light that is off, so the previous on-state survives the
+	/// light being turned off.
 	public init?(remembering light: LightState) {
 		guard light.isOn else { return nil }
 		self.brightnessPct = light.brightnessPct
-		if let rgb = light.rgb {
-			self.rgb = rgb
-			self.kelvin = nil
-		} else {
+		if let k = light.colorTempKelvin {
 			self.rgb = nil
-			self.kelvin = light.colorTempKelvin
+			self.kelvin = k
+		} else {
+			self.rgb = light.rgb
+			self.kelvin = nil
 		}
 	}
 

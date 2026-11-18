@@ -6,6 +6,11 @@ import Foundation
 public struct LiveLightClient: LightProviding {
 	public let baseURL: URL
 	public let token: String
+	/// Per-request timeout. Widgets/intents keep the short default (they run on a
+	/// tight system budget); the foreground app passes `AppSettings.foregroundTimeout`.
+	public let timeout: TimeInterval
+	/// Extra attempts after a transient transport failure (see `isTransient`).
+	public let retries: Int
 	private let session: URLSession
 
 	/// - Parameters:
@@ -13,7 +18,13 @@ public struct LiveLightClient: LightProviding {
 	///     Tolerant of a missing scheme (defaults to `https://`), a trailing slash,
 	///     or a pasted endpoint ending in `/api` / `/api/states` — all normalize to root.
 	///   - token: HA long-lived access token, sent as `Authorization: Bearer …`.
-	public init?(baseURLString: String, token: String, session: URLSession = .shared) {
+	///   - timeout: per-request timeout in seconds.
+	///   - retries: how many times to retry a transient transport failure. Over
+	///     Tailscale the first request after the tunnel idles can stall while it
+	///     reconnects; one quick retry rides that out instead of surfacing
+	///     "The request timed out."
+	public init?(baseURLString: String, token: String, session: URLSession = .shared,
+	             timeout: TimeInterval = 5, retries: Int = 1) {
 		guard let url = URL(string: Self.normalizedBase(baseURLString)) else { return nil }
 		self.baseURL = url
 		// Tokens pasted from a .env or terminal often carry stray whitespace or
@@ -21,6 +32,8 @@ public struct LiveLightClient: LightProviding {
 		// a newline in the Authorization header breaks the request outright.
 		self.token = token.trimmingCharacters(in: .whitespacesAndNewlines)
 		self.session = session
+		self.timeout = timeout
+		self.retries = max(0, retries)
 	}
 
 	/// Reduce user input to the HA root URL string. Returns "" for empty input.
@@ -45,7 +58,7 @@ public struct LiveLightClient: LightProviding {
 	private func authed(_ url: URL, method: String = "GET", json: [String: Any]? = nil) throws -> URLRequest {
 		var req = URLRequest(url: url)
 		req.httpMethod = method
-		req.timeoutInterval = 5
+		req.timeoutInterval = timeout
 		if !token.isEmpty { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
 		if let json {
 			req.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -54,13 +67,34 @@ public struct LiveLightClient: LightProviding {
 		return req
 	}
 
-	private func run(_ req: URLRequest) async throws -> Data {
+	/// Network-path failures worth one more try: the request most likely never
+	/// reached HA (or, for idempotent calls, repeating it is harmless).
+	static func isTransient(_ error: URLError) -> Bool {
+		switch error.code {
+		case .timedOut, .networkConnectionLost, .notConnectedToInternet,
+		     .cannotConnectToHost, .cannotFindHost, .dnsLookupFailed:
+			return true
+		default:
+			return false
+		}
+	}
+
+	/// - Parameter retryable: false for non-idempotent calls (`toggle`), where a
+	///   timed-out request may still have landed and repeating it would undo it.
+	private func run(_ req: URLRequest, retryable: Bool = true) async throws -> Data {
 		let data: Data
 		let response: URLResponse
-		do {
-			(data, response) = try await session.data(for: req)
-		} catch {
-			throw LightError.transport(error.localizedDescription)
+		var attempt = 0
+		while true {
+			do {
+				(data, response) = try await session.data(for: req)
+				break
+			} catch let error as URLError where retryable && attempt < retries && Self.isTransient(error) {
+				attempt += 1
+				try? await Task.sleep(for: .milliseconds(500))
+			} catch {
+				throw LightError.transport(error.localizedDescription)
+			}
 		}
 		if let http = response as? HTTPURLResponse {
 			switch http.statusCode {
@@ -112,7 +146,8 @@ public struct LiveLightClient: LightProviding {
 	}
 
 	public func toggle(_ entityID: String) async throws {
-		_ = try await run(try authed(endpoint("api/services/light/toggle"), method: "POST", json: ["entity_id": entityID]))
+		_ = try await run(try authed(endpoint("api/services/light/toggle"), method: "POST", json: ["entity_id": entityID]),
+		          retryable: false)
 	}
 
 	public func testConnection() async -> Bool {

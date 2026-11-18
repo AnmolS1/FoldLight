@@ -53,6 +53,12 @@ struct RootView: View {
 	private var bp: BlueprintColors { BlueprintColors.resolve(colorScheme, contrast: contrast) }
 
 	@State private var showOnboarding = false
+	@Environment(\.scenePhase) private var scenePhase
+	/// Set at the first activation, so launch doesn't fire a second refresh beside
+	/// `.task`. Every later return to `.active` refreshes — including the
+	/// inactive→active hop after pulling down Control Center (where FoldLight's preset
+	/// controls live), which never passes through `.background`.
+	@State private var hasBeenActive = false
 
 	var body: some View {
 		TabView(selection: $selectedTab) {
@@ -68,6 +74,13 @@ struct RootView: View {
 				.environment(\.blueprint, bp)
 		}
 		.task { await vm.refresh() }
+		// Re-read HA on return to the foreground. Until now the app read only once,
+		// at launch: state changed from widgets or Control Center never showed, and a
+		// launch-time timeout (a cold Tailscale tunnel) stuck until relaunch.
+		.onChange(of: scenePhase, initial: true) { _, phase in
+			guard phase == .active else { return }
+			if hasBeenActive { Task { await vm.refresh() } } else { hasBeenActive = true }
+		}
 		.onChange(of: settings.useMockData) { _, _ in vm.applySettings(settings) }
 		.onChange(of: settings.baseURLString) { _, _ in vm.applySettings(settings) }
 		.onChange(of: settings.token) { _, _ in vm.applySettings(settings) }

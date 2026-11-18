@@ -12,12 +12,22 @@ final class LastLightStateTests: XCTestCase {
 		XCTAssertNil(LightOnState(remembering: light(on: false, brightness: 80, rgb: LightRGB(r: 1, g: 2, b: 3))))
 	}
 
-	func testPrefersColorOverTemperature() {
+	func testWhiteModeRemembersTemperatureNotDerivedColor() {
+		// In color_temp mode HA ALSO reports an rgb_color derived from the temperature.
+		// It only sets color_temp_kelvin in that mode (null in xy mode), so a kelvin
+		// means "white". Restoring the derived rgb would switch the bulb to color mode.
 		let s = LightOnState(remembering: light(on: true, brightness: 70,
 		                                        rgb: LightRGB(r: 255, g: 170, b: 90), kelvin: 2700))
 		XCTAssertEqual(s?.brightnessPct, 70)
+		XCTAssertEqual(s?.kelvin, 2700)
+		XCTAssertNil(s?.rgb, "Exactly one of rgb/kelvin (both is ambiguous for turn_on)")
+	}
+
+	func testColorModeRemembersColor() {
+		// xy mode: color_temp_kelvin is null (see Fixtures/state-yetstrhom-on.json).
+		let s = LightOnState(remembering: light(on: true, brightness: 75, rgb: LightRGB(r: 255, g: 170, b: 90)))
 		XCTAssertEqual(s?.rgb, LightRGB(r: 255, g: 170, b: 90))
-		XCTAssertNil(s?.kelvin, "A color light shouldn't also carry a temperature (ambiguous for turn_on)")
+		XCTAssertNil(s?.kelvin)
 	}
 
 	func testUsesTemperatureWhenNoColor() {

@@ -30,6 +30,8 @@ struct EditorView: View {
 	@State private var presetName = ""
 	@State private var presets: [LightPreset] = []
 	@State private var colorDebounce: Task<Void, Never>?
+	/// True while a slider is held, so an HA state update can't yank it mid-drag.
+	@State private var dragging = false
 
 	enum ColorMode: String, CaseIterable { case white = "White", color = "Color" }
 
@@ -67,7 +69,17 @@ struct EditorView: View {
 				.padding(16)
 				.iPadColumn()
 			}
-			.task(id: light?.entityID) { syncFromLight() }
+			// Pull-to-refresh: a manual way back after a failed or stale load.
+			.refreshable { await vm.refresh() }
+			.task(id: light?.entityID) { syncFromLight(force: true) }
+			// Mirror HA's state into the controls whenever it changes — from this
+			// editor, a widget swatch, Control Center, or HA itself. Before this the
+			// controls only synced when the selected light changed. A light that was
+			// off at launch then showed the editor's built-in defaults (orange, 100%)
+			// even after it came back on in a preset's color.
+			.onChange(of: light) { _, _ in
+				if !dragging { syncFromLight(force: false) }
+			}
 			.onAppear { presets = PresetStore.shared.load() }
 			// Screenshot capture: `--screen presets` opens the editor scrolled to the
 			// preset library. Wait a beat for mock lights to load and lay out first.
@@ -131,6 +143,7 @@ struct EditorView: View {
 		.accessibilityElement(children: .ignore)
 		.accessibilityLabel(light.name)
 		.accessibilityValue(previewA11yValue(light))
+		.accessibilityIdentifier("bulbPreview")
 	}
 
 	/// Spoken state for the preview: "On, 60 percent, warm white" / "On, 60 percent,
@@ -214,9 +227,20 @@ struct EditorView: View {
 			}
 
 			if light.supportsColor && (mode == .color || !light.supportsColorTemp) {
-				ColorPicker("Color", selection: $color, supportsOpacity: false)
+				// A custom binding, not `.onChange(of: color)`: only a USER edit may send
+				// to HA. onChange also fired for programmatic sets (preset Apply, syncing
+				// from HA), which sent a redundant second turn_on. Once the editor syncs
+				// from HA, that would loop: HA echoes a re-quantized color → onChange →
+				// send → echo.
+				ColorPicker("Color", selection: Binding(
+					get: { color },
+					set: { newColor in
+						color = newColor
+						loadHSB(from: newColor)
+						debouncedColorApply(to: light)
+					}
+				), supportsOpacity: false)
 					.font(Typography.text(14, weight: .semibold))
-					.onChange(of: color) { _, _ in loadHSB(from: color); debouncedColorApply(to: light) }
 					#if os(macOS)
 					.help("Pick a color for \(light.name)")
 					#endif
@@ -252,6 +276,7 @@ struct EditorView: View {
 					.font(Typography.mono(11)).foregroundStyle(bp.ink60)
 			}
 			Slider(value: value, in: 0...1, onEditingChanged: { editing in
+				dragging = editing
 				if !editing { syncColorFromHSB(); debouncedColorApply(to: light) }
 			}).tint(bp.crease)
 		}
@@ -296,6 +321,7 @@ struct EditorView: View {
 				Text("\(Int(value.wrappedValue))\(unit)").font(Typography.mono(12)).foregroundStyle(bp.ink60)
 			}
 			Slider(value: value, in: range, onEditingChanged: { editing in
+				dragging = editing
 				if !editing { onCommit() }   // fire once, on release
 			}).tint(bp.crease)
 		}
@@ -391,6 +417,11 @@ struct EditorView: View {
 				// Message in `ink` (not `crane`) so 12pt text clears WCAG AA; the off
 				// bulb above already signals the error state without relying on color.
 				Text(msg).font(Typography.text(12)).foregroundStyle(bp.ink).multilineTextAlignment(.center)
+				Button("Try again") { Task { await vm.refresh() } }
+					.font(Typography.text(14, weight: .semibold))
+					.tint(bp.sax)
+					.buttonStyle(.bordered)
+					.frame(minHeight: 44)
 			}
 		}
 		.padding(.top, 40)
@@ -398,14 +429,33 @@ struct EditorView: View {
 
 	// MARK: Sync + apply
 
-	private func syncFromLight() {
+	/// Mirror the light's state into the editor's controls.
+	/// - Parameter force: true when the selected light changes, which resets every
+	///   control. False for an update to the same light: values that match what's
+	///   shown, within HA's round-trip drift (see `EditorSync`), are left alone, so
+	///   the echo of a change just sent doesn't nudge the controls or drop a
+	///   preset's checkmark.
+	private func syncFromLight(force: Bool) {
 		guard let light else { return }
-		brightness = Double(light.brightnessPct ?? 100)
-		if let k = light.colorTempKelvin { kelvin = Double(k) }
-		else { kelvin = Double(light.minKelvin ?? 2700) }
-		if let rgb = light.rgb { color = rgb.color; loadHSB(from: color); mode = .color }
-		else if light.supportsColorTemp { mode = .white }
-		else if light.supportsColor { mode = .color }
+		// For an off light this is what turning it on will restore.
+		let shown = EditorSync.display(for: light, lastOn: LastLightStateStore.shared.lastOn(light.entityID))
+
+		if let pct = shown?.brightnessPct { brightness = Double(pct) }
+		else if force { brightness = 100 }
+		// No reported temperature: park the slider at the bulb's own minimum. A
+		// fixed default could fall outside its range.
+		if force, shown?.kelvin == nil { kelvin = Double(light.minKelvin ?? 2700) }
+
+		if let k = shown?.kelvin {
+			if force || !EditorSync.sameKelvin(Int(kelvin), k) { kelvin = Double(k) }
+			if light.supportsColorTemp { mode = .white }
+		} else if let rgb = shown?.rgb {
+			if force || !EditorSync.sameColor(self.rgb(from: color), rgb) { color = rgb.color; loadHSB(from: color) }
+			if light.supportsColor { mode = .color }
+		} else if force {
+			if light.supportsColorTemp { mode = .white }
+			else if light.supportsColor { mode = .color }
+		}
 		// Screenshot capture: the "presets" shot opens the same bulb in White mode so
 		// it reads distinctly from the Color-mode editor shot (which all fits on one
 		// Pro Max screen), while still showing the preset library.
@@ -415,7 +465,7 @@ struct EditorView: View {
 	}
 
 	/// Mirror a preset into the editor's local controls (bulb preview + sliders read
-	/// this @State). Matches the shape of `syncFromLight()` / `saveCurrentAsPreset()`.
+	/// this @State). Matches the shape of `syncFromLight(force:)` / `saveCurrentAsPreset()`.
 	private func syncEditor(from preset: LightPreset) {
 		brightness = Double(preset.brightnessPct)
 		if let rgb = preset.rgb {
@@ -487,10 +537,11 @@ struct EditorView: View {
 		#if canImport(UIKit)
 		var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
 		UIColor(color).getRed(&r, green: &g, blue: &b, alpha: &a)
-		return LightRGB(r: Int(r * 255), g: Int(g * 255), b: Int(b * 255))
+		return LightRGB(r: Int((r * 255).rounded()), g: Int((g * 255).rounded()), b: Int((b * 255).rounded()))
 		#elseif canImport(AppKit)
 		let ns = NSColor(color).usingColorSpace(.sRGB) ?? .white
-		return LightRGB(r: Int(ns.redComponent * 255), g: Int(ns.greenComponent * 255), b: Int(ns.blueComponent * 255))
+		return LightRGB(r: Int((ns.redComponent * 255).rounded()), g: Int((ns.greenComponent * 255).rounded()),
+		                b: Int((ns.blueComponent * 255).rounded()))
 		#else
 		return LightRGB(r: 255, g: 255, b: 255)
 		#endif

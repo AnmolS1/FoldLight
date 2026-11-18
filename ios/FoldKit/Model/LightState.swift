@@ -104,8 +104,10 @@ public extension LightState {
 	/// A bundled sample light (the IKEA color bulb) for previews/placeholders.
 	static let sampleColor = LightState(
 		entityID: "light.yetstrhom", name: "Yetstrhöm", isOn: true,
+		// In xy (color) mode HA reports no color_temp_kelvin — matches
+		// Fixtures/state-yetstrhom-on.json. A kelvin here would mean white mode.
 		brightnessPct: 70, rgb: LightRGB(r: 255, g: 170, b: 90),
-		colorTempKelvin: 2700, supportedColorModes: ["color_temp", "xy"],
+		colorTempKelvin: nil, supportedColorModes: ["color_temp", "xy"],
 		minKelvin: 2202, maxKelvin: 4000
 	)
 

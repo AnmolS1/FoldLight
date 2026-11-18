@@ -38,6 +38,11 @@ public final class AppSettings {
 
 	public static let shared = AppSettings()
 
+	/// Request timeout for the foreground app. The phone reaches HA over Tailscale,
+	/// and the first request after the tunnel idles can take several seconds while
+	/// it reconnects — longer than the 5 s widget default.
+	public nonisolated static let foregroundTimeout: TimeInterval = 15
+
 	private typealias Keys = SettingsKeys
 
 	private let defaults: UserDefaults
@@ -82,8 +87,14 @@ public final class AppSettings {
 
 	/// The light provider implied by the current settings.
 	public func makeProvider() -> any LightProviding {
-		if useMockData { return MockLightClient() }
-		if let live = LiveLightClient(baseURLString: baseURLString, token: token) {
+		Self.makeProvider(useMock: useMockData, baseURLString: baseURLString, token: token)
+	}
+
+	/// Pure form of `makeProvider()`, testable without touching the App Group or
+	/// Keychain.
+	nonisolated static func makeProvider(useMock: Bool, baseURLString: String, token: String) -> any LightProviding {
+		if useMock { return MockLightClient() }
+		if let live = LiveLightClient(baseURLString: baseURLString, token: token, timeout: foregroundTimeout) {
 			return live
 		}
 		return MockLightClient()

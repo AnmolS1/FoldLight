@@ -17,6 +17,7 @@
 		0A445391E5DDE4CDD24EE732 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E875EC3EF51B335C775E6659 /* AppSettings.swift */; };
 		0EFD541FF3A98CE17F87055A /* LightIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446300FF731E8E89D545EE8 /* LightIntents.swift */; };
 		10337EE2A1C2E62F14D8E547 /* AccessibilitySizeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF049D14630F20CC4676089E /* AccessibilitySizeUITests.swift */; };
+		1A90E203A18BE01459C5E8AE /* TransientRetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534990731DA3822CD911490D /* TransientRetryTests.swift */; };
 		1AEED598AB1C666F3EB01975 /* LauncherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */; };
 		1D0B2D134CA0781086023AB3 /* LightTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */; };
 		2066122466D78BFB5D9B4044 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7F36D929FACF37B20C8F5 /* OnboardingView.swift */; };
@@ -40,6 +41,7 @@
 		56A5D19CCFF1EA21E8FDDF6A /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5281133B045648B18BDC09E8 /* Accessibility.swift */; };
 		5D1BAF926B3FF3CFBFBF0A52 /* LaunchersManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793366696457FB8ED6F5A92D /* LaunchersManagerView.swift */; };
 		5D2E093DEB011A77450DF175 /* LightControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A2BE07247DE719C1809136 /* LightControls.swift */; };
+		69EC502AF9E3BF5C6F489E4F /* EditorSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3720ADE79BC35B275DC5EB9 /* EditorSyncTests.swift */; };
 		6A3EA72ADB2BC70684F591E5 /* WidgetReload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7B9C4F90EACECC1A62B384 /* WidgetReload.swift */; };
 		6EBDB3520C6538B61BB27B09 /* LightIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446300FF731E8E89D545EE8 /* LightIntents.swift */; };
 		6FE7A9192A14718217F0EA8D /* LightPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D48FB49330E0AB6316719 /* LightPreset.swift */; };
@@ -54,7 +56,9 @@
 		979B248C9E580FDAA0F3D581 /* LightAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF8104D0F649C38E91638D9 /* LightAppEntity.swift */; };
 		994CAA07EBF52CE6029F563C /* FoldLightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3DA12846803FBE6FFDBEFB /* FoldLightApp.swift */; };
 		9B0AF79799095E216397E72D /* FoldKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A0ED4AEFC16A915DEFD297F1 /* EditorSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA4BAF54D5E0687316721B /* EditorSync.swift */; };
 		AF8D0AE1DD4A1B7361EEB107 /* FoldKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502A50B378B84D19104D33D7 /* FoldKit.framework */; };
+		B5155191D5218AA2C97EE8BD /* EditorSyncUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57470A9188192D8ECA3338C4 /* EditorSyncUITests.swift */; };
 		BC30BE60B81A0A1EC615C3E1 /* LauncherStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */; };
 		BCA90FAC5B3E3CD9A4D1A975 /* HankenGrotesk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46289637821DC5FC02C904A9 /* HankenGrotesk.ttf */; };
 		BD833E9C9B3B4A4C46E5BCC9 /* IntentDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28EB4F0C7DADCDA66175229 /* IntentDiagnostics.swift */; };
@@ -169,6 +173,7 @@
 		238624192771C51E0153A704 /* LightsManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightsManagerView.swift; sourceTree = "<group>"; };
 		2678ED00B6D0E405EC1E5D0F /* LauncherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherStore.swift; sourceTree = "<group>"; };
 		28ECF383F97A3EAA8418F8C4 /* LiveLightClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveLightClient.swift; sourceTree = "<group>"; };
+		29FA4BAF54D5E0687316721B /* EditorSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSync.swift; sourceTree = "<group>"; };
 		2E1A172A113276B57CA93306 /* IBMPlexMono-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-SemiBold.ttf"; sourceTree = "<group>"; };
 		31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherStoreTests.swift; sourceTree = "<group>"; };
 		45D7F36D929FACF37B20C8F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -179,6 +184,8 @@
 		502A50B378B84D19104D33D7 /* FoldKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoldKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52365D14AE83DDDFF38668BC /* PresetAndCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAndCacheTests.swift; sourceTree = "<group>"; };
 		5281133B045648B18BDC09E8 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		534990731DA3822CD911490D /* TransientRetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransientRetryTests.swift; sourceTree = "<group>"; };
+		57470A9188192D8ECA3338C4 /* EditorSyncUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSyncUITests.swift; sourceTree = "<group>"; };
 		653902FAACA0881BCA17573B /* BlueprintColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintColors.swift; sourceTree = "<group>"; };
 		664A501230F19A1A760FDFB5 /* IBMPlexMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexMono-Regular.ttf"; sourceTree = "<group>"; };
 		7048ECED6F9FE3590B6E7A6E /* LauncherTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LauncherTarget.swift; sourceTree = "<group>"; };
@@ -211,6 +218,7 @@
 		B9D5721B7C29447944B8654C /* LastLightStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastLightStateTests.swift; sourceTree = "<group>"; };
 		BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNormalizationTests.swift; sourceTree = "<group>"; };
 		C493B203C5CEBAEF5CE360AB /* LightTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTimelineProvider.swift; sourceTree = "<group>"; };
+		D3720ADE79BC35B275DC5EB9 /* EditorSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSyncTests.swift; sourceTree = "<group>"; };
 		D4C233046B2954961897FD18 /* PresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetStore.swift; sourceTree = "<group>"; };
 		DBB7E86A7902486058999CF8 /* FoldLightWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = FoldLightWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightDecodingTests.swift; sourceTree = "<group>"; };
@@ -377,6 +385,7 @@
 		A4DA5867CBF5183CE411D27C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				29FA4BAF54D5E0687316721B /* EditorSync.swift */,
 				7048ECED6F9FE3590B6E7A6E /* LauncherTarget.swift */,
 				045D48FB49330E0AB6316719 /* LightPreset.swift */,
 				B3CD69F1148210A5743CA85C /* LightState.swift */,
@@ -388,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				FF049D14630F20CC4676089E /* AccessibilitySizeUITests.swift */,
+				57470A9188192D8ECA3338C4 /* EditorSyncUITests.swift */,
 			);
 			path = FoldLightUITests;
 			sourceTree = "<group>";
@@ -457,11 +467,13 @@
 				6C4DABAB149DF0D247135D3B /* Fixtures */,
 				E9334DF7BAC9650728DAA028 /* AccessibilityTests.swift */,
 				ECDA8BC31042CF3658F9F4F1 /* BrightnessTests.swift */,
+				D3720ADE79BC35B275DC5EB9 /* EditorSyncTests.swift */,
 				B9D5721B7C29447944B8654C /* LastLightStateTests.swift */,
 				31870AFE3F2BA912966E6036 /* LauncherStoreTests.swift */,
 				E3A6E335238ED3847DBD4173 /* LightDecodingTests.swift */,
 				89D2B3CB4D60858496116CF3 /* LightPrefsTests.swift */,
 				52365D14AE83DDDFF38668BC /* PresetAndCacheTests.swift */,
+				534990731DA3822CD911490D /* TransientRetryTests.swift */,
 				BDFECE5DC7BAC4C0A781E01A /* URLNormalizationTests.swift */,
 			);
 			path = FoldKitTests;
@@ -738,11 +750,13 @@
 			files = (
 				8526378B95FD0913BDE9B25F /* AccessibilityTests.swift in Sources */,
 				EF564E780E17830E9F397BC8 /* BrightnessTests.swift in Sources */,
+				69EC502AF9E3BF5C6F489E4F /* EditorSyncTests.swift in Sources */,
 				01FA48A63DC2541CBFEFAFE8 /* LastLightStateTests.swift in Sources */,
 				BC30BE60B81A0A1EC615C3E1 /* LauncherStoreTests.swift in Sources */,
 				3AE9D465E16FBEA32ECECB0B /* LightDecodingTests.swift in Sources */,
 				06CB595EF82BECFA7B177B6D /* LightPrefsTests.swift in Sources */,
 				34E550116E1AD99C71165B6D /* PresetAndCacheTests.swift in Sources */,
+				1A90E203A18BE01459C5E8AE /* TransientRetryTests.swift in Sources */,
 				48F6AF5D131F4273113FAD3B /* URLNormalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -768,6 +782,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10337EE2A1C2E62F14D8E547 /* AccessibilitySizeUITests.swift in Sources */,
+				B5155191D5218AA2C97EE8BD /* EditorSyncUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,6 +795,7 @@
 				D865624ED70974BE537EC0A3 /* BlueprintColors.swift in Sources */,
 				D958EEF0CC6EB7AAF113D061 /* BlueprintDecor.swift in Sources */,
 				C7767D8D44D8EA6879AC5D1B /* BlueprintForm.swift in Sources */,
+				A0ED4AEFC16A915DEFD297F1 /* EditorSync.swift in Sources */,
 				085569957E7549B92611562C /* FoldKitResources.swift in Sources */,
 				2FF04B04BC8EBE7098EB5390 /* Fonts.swift in Sources */,
 				BD833E9C9B3B4A4C46E5BCC9 /* IntentDiagnostics.swift in Sources */,
